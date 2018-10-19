@@ -1,0 +1,39 @@
+﻿@model IEnumerable<HalifaxDine.Models.EmployeeModel>
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Privilege_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Branch_id)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Privilege_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Branch_id)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Emp_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Emp_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Emp_id })
+        </td>
+    </tr>
+}
+
+</table>
