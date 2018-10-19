@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HalifaxDine", "HalifaxDine\HalifaxDine.csproj", "{7CA271D8-CE71-4508-94B6-3407F27A8378}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HalifaxDine.Tests", "HalifaxDine.Tests\HalifaxDine.Tests.csproj", "{BE2D54E9-3263-43E5-B42C-0790938A6598}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7CA271D8-CE71-4508-94B6-3407F27A8378}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CA271D8-CE71-4508-94B6-3407F27A8378}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CA271D8-CE71-4508-94B6-3407F27A8378}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CA271D8-CE71-4508-94B6-3407F27A8378}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE2D54E9-3263-43E5-B42C-0790938A6598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE2D54E9-3263-43E5-B42C-0790938A6598}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE2D54E9-3263-43E5-B42C-0790938A6598}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE2D54E9-3263-43E5-B42C-0790938A6598}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7A14D2AE-5B3F-4BDD-A296-E52C31A9BB9F}
+	EndGlobalSection
+EndGlobal
