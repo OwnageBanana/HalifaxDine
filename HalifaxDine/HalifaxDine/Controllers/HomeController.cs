@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HalifaxDine.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,17 +7,38 @@ using System.Web.Mvc;
 
 namespace HalifaxDine.Controllers
 {
+    [Authorize()]
     public class HomeController : Controller
     {
+        public HomeController()
+        {
+
+        }
         public ActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = User.Identity;
+                ViewBag.Name = user.Name;
+
+                ViewBag.displayMenu = "No";
+
+            }
+            else
+            {
+                ViewBag.Name = "Not Logged IN";
+            }
+
+
+            DatabaseAccess db = new DatabaseAccess();
+
+            var t = db.GetCustomerData();
             return View();
         }
 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-
             return View();
         }
 

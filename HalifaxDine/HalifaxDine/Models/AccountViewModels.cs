@@ -81,6 +81,55 @@ namespace HalifaxDine.Models
         public string ConfirmPassword { get; set; }
     }
 
+    public class AdminRegisterViewModel : RegisterViewModel
+    {
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Phone Number")]
+        public string Phone { get; set; }
+
+        [Required]
+        [DataType("Number")]
+        [Display(Name = "Branch Id")]
+        public int Branch_Id { get; set; }
+
+        [Required]
+        [DataType("Number")]
+        [Display(Name = "Wage")]
+        public decimal Wage { get; set; }
+
+
+        [Required]
+        [Display(Name = "Select User Role")]
+        public Role Role { get; set; }
+
+        public EmployeeModel MakeDataModel()
+        {
+            return new EmployeeModel
+            {
+                Emp_Email = Email,
+                Branch_id = Branch_Id,
+                Emp_FName = FirstName,
+                Emp_LName = LastName,
+                Emp_Hire_Date = System.DateTime.Today,
+                Emp_Hourly_Rate = Wage,
+                Emp_Phone = Phone,
+                Privilege_id = (int)Role,
+            };
+        }
+    }
+
     public class ResetPasswordViewModel
     {
         [Required]
