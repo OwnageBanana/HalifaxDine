@@ -58,6 +58,22 @@ namespace HalifaxDine
                 role.Name = "Manager";
                 roleManager.Create(role);
 
+                var user = new ApplicationUser();
+                user.UserName = "manager@dine.com";
+                user.Email = "manager@dine.com";
+
+                string userPWD = "manager123";
+
+                var chkUser = UserManager.Create(user, userPWD);
+
+                //Add default User to Role Admin
+                if (chkUser.Succeeded)
+                {
+                    var result1 = UserManager.AddToRole(user.Id, "HeadManager");
+
+                }
+
+
             }
 
             // creating Creating Employee role
