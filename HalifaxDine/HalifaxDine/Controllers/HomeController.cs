@@ -48,12 +48,32 @@ namespace HalifaxDine.Controllers
 
             return View();
         }
+        [Authorize(Roles="Admin")]
+        public ActionResult AdminFunction()
+        {
+            ViewBag.Message = "Function page.";
 
-        public ActionResult Function()
+            return RedirectToAction("AdminRegister", "Account", null);
+        }
+
+        public ActionResult ManagerFunction()
         {
             ViewBag.Message = "Function page.";
 
             return View();
         }
+        public ActionResult ClientFunction()
+        {
+            ViewBag.Message = "Function page.";
+
+            return View();
+        }
+        public ActionResult ChefFunction()
+        {
+            ViewBag.Message = "Function page.";
+
+            return View();
+        }
+
     }
 }

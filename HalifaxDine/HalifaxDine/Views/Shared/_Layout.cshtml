@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿
+@using StackExchange.Profiling;
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -16,17 +18,20 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                  
+
                 </button>
                 @Html.ActionLink("HalifaxDine", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
 
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html. ("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Function", "Function", "Home")</li>
+                    <li>@Html.AuthorizedActionLink("Function", "AdminFunction", "Home")</li>
+                    <li>@Html.AuthorizedActionLink("Function", "ManagerFunction", "Home")</li>
+                    <li>@Html.AuthorizedActionLink("Function", "MenuInfo", "Menu")</li>
+                    <li>@Html.AuthorizedActionLink("Function", "ChefFunction", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
