@@ -48,5 +48,12 @@ namespace HalifaxDine.Controllers
 
             return View();
         }
+
+        public ActionResult Function()
+        {
+            ViewBag.Message = "Function page.";
+
+            return View();
+        }
     }
 }
