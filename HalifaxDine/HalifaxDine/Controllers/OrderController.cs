@@ -32,7 +32,7 @@ namespace HalifaxDine.Controllers
         // GET: Order/Create
         public ActionResult Order(MenuItemModel item)
         {
-            TransactionModel clientOrder = dao.GetClientOrder()
+            //TransactionModel clientOrder = dao.GetClientOrder()
 
             return View();
         }
