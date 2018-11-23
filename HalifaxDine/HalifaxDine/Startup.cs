@@ -1,4 +1,5 @@
 ﻿using HalifaxDine.Models;
+using MySql.Data.Entity;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
@@ -24,7 +25,7 @@ namespace HalifaxDine
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
 
-            // In Startup iam creating first Admin Role and creating a default Admin User
+            // In Startup I am creating first Admin Role and creating a default Admin User
             if (!roleManager.RoleExists("Admin"))
             {
 

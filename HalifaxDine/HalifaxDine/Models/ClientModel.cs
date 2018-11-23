@@ -11,5 +11,6 @@ namespace HalifaxDine.Models
         public string Client_FName{ get; set; }
         public string Client_LName { get; set; }
         public string Client_Contact { get; set; }
+        public string Account_Id { get; set; }
     }
 }

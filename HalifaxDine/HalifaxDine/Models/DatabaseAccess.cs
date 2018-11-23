@@ -42,6 +42,119 @@ namespace HalifaxDine.Models
             return model;
         }
 
+        public IEnumerable<BranchModel> GetBranchData()
+        {
+            string sql = "select * from branch";
+
+
+            IEnumerable<BranchModel> model = Enumerable.Empty<BranchModel>();
+            try
+            {
+                model = conn.Query<BranchModel>(sql);
+            }
+            catch (Exception e)
+            {
+                ;
+            }
+
+            return model;
+        }
+
+        public IEnumerable<MenuItemModel> GetMenuData()
+        {
+            string sql = "select * from Menu_Item";
+
+
+            IEnumerable<MenuItemModel> model = Enumerable.Empty<MenuItemModel>();
+            try
+            {
+                model = conn.Query<MenuItemModel>(sql);
+            }
+            catch (Exception e)
+            {
+                ;
+            }
+
+            return model;
+        }
+
+        public IEnumerable<FeedbackModel> GetFeedbackData()
+        {
+            string sql = "select * from feedback";
+
+
+            IEnumerable<FeedbackModel> model = Enumerable.Empty<FeedbackModel>();
+            try
+            {
+                model = conn.Query<FeedbackModel>(sql);
+            }
+            catch (Exception e)
+            {
+                ;
+            }
+
+            return model;
+        }
+
+
+        public ClientModel GetClientRow(string Account_Id)
+        {
+            string sql = "select * from client where Account_Id = @Account_Id";
+
+
+            ClientModel model = new ClientModel();
+            try
+            {
+                model = conn.Query<ClientModel>(sql, new { Account_Id }).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                ;
+            }
+
+            return model;
+        }
+
+        public bool InsertFeedbackRow(FeedbackModel model)
+        {
+            string sql = @"INSERT INTO feedback VALUES (DEFAULT, @Client_Id, @Feedback_Comment)";
+
+            bool success = false;
+            try
+            {
+                success = 1 == conn.Execute(sql, new { model.Client_Id, model.Feedback_Comment });
+            }
+            catch (Exception e)
+            {
+                ;
+            }
+
+            return success;
+        }
+
+        public bool InsertClientRow(ClientModel model)
+        {
+            string sql = @"INSERT INTO `halifaxdine`.`client`
+                            (`CLIENT_ID`,
+                            `CLIENT_FNAME`,
+                            `CLIENT_LNAME`,
+                            `CLIENT_CONTACT`,
+                            `ACCOUNT_ID`)
+ VALUES (DEFAULT, @Client_FName, @Client_LName, @Client_Contact, @Account_Id)";
+
+            bool success = false;
+            try
+            {
+                success = 1 == conn.Execute(sql, new { model.Client_FName, model.Client_LName, model.Client_Contact, model.Account_Id });
+            }
+            catch (Exception e)
+            {
+                ;
+            }
+
+            return success;
+        }
+
         public bool AddEmployeeRow(EmployeeModel model)
         {
             string sql = @"INSERT INTO `halifaxdine`.`employee`
