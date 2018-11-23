@@ -8,8 +8,8 @@ namespace HalifaxDine.Models
     public class MenuItemModel
     {
         public int Menu_Id { get; set; }
-        public string Menu_Ref { get; set; }
-        public string Menu_Ing { get; set; }
-        public string Menu_Meal { get; set; }
+        public string Menu_Name { get; set; }
+        public string Menu_Desc { get; set; }
+        public string Menu_Price { get; set; }
     }
 }

@@ -10,6 +10,12 @@ namespace HalifaxDine.Models
         public int Trans_Id { get; set; }
         public int Client_Id { get; set; }
         public DateTime Trans_Date { get; set; }
-        public string Trans_Status { get; set; }
+        public TransactionStatus Trans_Status { get; set; }
+    }
+
+    public enum TransactionStatus
+    {
+        Paid,
+        Unpaid
     }
 }

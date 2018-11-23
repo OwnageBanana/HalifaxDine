@@ -147,7 +147,7 @@ namespace HalifaxDine.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(ClientRegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -163,6 +163,8 @@ namespace HalifaxDine.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
+                    ClientModel client = new ClientModel { Client_Contact = model.Email, Client_FName = model.FirstName, Client_LName = model.LastName,Account_Id = user.Id };
+                    bool success = new DatabaseAccess().InsertClientRow(client);
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

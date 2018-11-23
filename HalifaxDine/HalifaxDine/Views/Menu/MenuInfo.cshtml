@@ -1,0 +1,26 @@
+﻿@model IEnumerable<HalifaxDine.Models.MenuItemModel>
+
+@{
+    ViewBag.Title = "MenuInfo";
+}
+
+<h2>MenuInfo</h2>
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+        <div class="col-lg-6">
+            <b>@Html.DisplayFor(modelItem => item.Menu_Name)</b>
+            <br />
+            <p>
+                @Html.DisplayFor(modelItem => item.Menu_Desc)
+            </p>
+            <div style="width:100%">
+                @Html.DisplayFor(modelItem => item.Menu_Price)
+                @Html.ActionLink("Order", "Order", "Order", item, new { @class = "btn btn-primary"})
+            </div>
+        </div>
+        }
+    </div>
+</div>

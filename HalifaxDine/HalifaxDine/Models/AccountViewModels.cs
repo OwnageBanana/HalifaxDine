@@ -81,7 +81,7 @@ namespace HalifaxDine.Models
         public string ConfirmPassword { get; set; }
     }
 
-    public class AdminRegisterViewModel : RegisterViewModel
+    public class ClientRegisterViewModel : RegisterViewModel
     {
 
         [Required]
@@ -93,6 +93,10 @@ namespace HalifaxDine.Models
         [DataType(DataType.Text)]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
+    }
+
+    public class AdminRegisterViewModel : ClientRegisterViewModel
+    {
 
         [Required]
         [DataType(DataType.Text)]
