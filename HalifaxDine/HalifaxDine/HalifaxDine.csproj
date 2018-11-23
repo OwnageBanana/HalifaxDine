@@ -307,6 +307,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\bc.jpg" />
+    <Content Include="images\f1.jpg" />
+    <Content Include="images\f2.jpg" />
+    <Content Include="images\f3.jpg" />
+    <Content Include="images\f4.jpg" />
+    <Content Include="images\halifax.jpg" />
+    <Content Include="images\nb.jpg" />
+    <Content Include="images\on.jpg" />
+    <Content Include="images\qb.jpg" />
+    <Content Include="images\title.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
