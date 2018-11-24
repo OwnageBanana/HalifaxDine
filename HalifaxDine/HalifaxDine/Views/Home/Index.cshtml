@@ -2,140 +2,85 @@
     ViewBag.Title = "Home Page";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <style>
-        body {
-            font: 20px Montserrat, sans-serif;
-            line-height: 1.8;
-            color: #f5f6f7;
-        }
+<!-- First Container -->
+<div class="container-fluid bg-1 text-center">
+    <img src="/images/title.png" class="img-responsive img-circle margin" style="display:inline" width="800" height="800">
+</div>
 
-        p {
-            font-size: 16px;
-        }
+<!-- Second Container -->
+<div class="container-fluid bg-2 text-center">
+    <h3 class="margin">BRANCH</h3>
+    <div class="row">
+        <div class="col-smt-4">
+            <p>Halifax.</p>
+            <p>2901,Windsor Street,Halifax,NS,B3K 5E5, Canada, 902-111-2222.</p>
+            <img src="/images/halifax.jpg" class="img-responsive img-circle margin" style="display:inline" width="650" height="650">
+        </div>
+        <div class="col-sm-4">
+            <p>     </p>
+            <p>British Columbia</p>
+            <p>31,Back Street,Vancouver.</p>
+            <img src="/images/bc.jpg" class="img-responsive img-circle margin" style="width:100%" alt="Image">
+        </div>
+        <div class="col-sm-4">
+            <p>Ontario</p>
+            <p>3871,Kim Street,Toronto.</p>
+            <img src="/images/on.jpg" class="img-responsive img-circle margin" style="width:100%" alt="Image">
+        </div>
+        <div class="col-sm-4">
+            <p>New Brunswick</p>
+            <p>4331,Bently Street,Moncton.</p>
+            <img src="/images/nb.jpg" class="img-responsive img-circle margin" style="width:100%" alt="Image">
+        </div>
+        <div class="col-sm-4 col-lg-12">
+            <div style="height:650px;width:650px;">
+                <p>Quebec</p>
+                <p>3231,Victoria Street,Quebec.</p>
+                <img src="/images/qb.jpg" class="img-responsive img-circle  margin" style="width:100%" alt="Image">
+            </div>
+        </div>
 
-        .margin {
-            margin-bottom: 45px;
-        }
 
-        .bg-1 {
-            background-color: #1abc9c; /* Green */
-            color: #ffffff;
-        }
-
-        .bg-2 {
-            background-color: #474e5d; /* Dark Blue */
-            color: #ffffff;
-        }
-
-        .bg-3 {
-            background-color: #ffffff; /* White */
-            color: #555555;
-        }
-
-        .container-fluid {
-            padding-top: 70px;
-            padding-bottom: 70px;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- First Container -->
-    <div class="container-fluid bg-1 text-center">
-        <img src="/images/title.png" class="img-responsive img-circle margin" style="display:inline" width="800" height="800">
     </div>
+</div>
 
-    <!-- Second Container -->
-    <div class="container-fluid bg-2 text-center">
-        <h3 class="margin">BRANCH</h3>
-        <div class="row">
-            <div class="col-smt-4">
-                <p>Halifax.</p>
-                <p>2901,Windsor Street,Halifax,NS,B3K 5E5, Canada, 902-111-2222.</p>
-                <img src="/images/halifax.jpg" class="img-responsive img-circle margin" style="display:inline" width="650" height="650">
-            </div>
-            <div class="col-sm-4">
-                <p>     </p>
-                <p>British Columbia</p>
-                <p>31,Back Street,Vancouver.</p>
-                <img src="/images/bc.jpg" class="img-responsive img-circle margin" style="width:100%" alt="Image">
-            </div>
-            <div class="col-sm-4">
-                <p>Ontario</p>
-                <p>3871,Kim Street,Toronto.</p>
-                <img src="/images/on.jpg" class="img-responsive img-circle margin" style="width:100%" alt="Image">
-            </div>
-            <div class="col-sm-4">
-                <p>New Brunswick</p>
-                <p>4331,Bently Street,Moncton.</p>
-                <img src="/images/nb.jpg" class="img-responsive img-circle margin" style="width:100%" alt="Image">
-            </div>
-            <div class="col-sm-4 col-lg-12">
-                <div style="height:650px;width:650px;">
-                    <p>Quebec</p>
-                    <p>3231,Victoria Street,Quebec.</p>
-                    <img src="/images/qb.jpg" class="img-responsive img-circle  margin" style="width:100%" alt="Image">
-                </div>
-                </div>
+<!-- Third Container (Grid) -->
+<div class="container-fluid bg-3 text-center">
+    <h3 class="margin">MENU</h3><br>
 
-
+    <div class="row">
+        <div class="col-sm-4">
+            <p>Seafood Platter | Dinner.</p>
+            <p>Seasonally fresh sea food, chef paired condiments.</p>
+            <img src="/images/f4.jpg" class="img-responsive margin" style="width:100%" alt="Image">
         </div>
+        <div class="col-sm-4">
+            <p>Chowder | Dinnerr</p>
+            <p>Lobster cream, scallops, halibut, lobster, haddock.</p>
+            <img src="/images/f2.jpg" class="img-responsive margin" style="width:100%" alt="Image">
         </div>
-
-        <!-- Third Container (Grid) -->
-        <div class="container-fluid bg-3 text-center">
-            <h3 class="margin">MENU</h3><br>
-
-            <div class="row">
-                <div class="col-sm-4">
-                    <p>Seafood Platter | Dinner.</p>
-                    <p>Seasonally fresh sea food, chef paired condiments.</p>
-                    <img src="/images/f4.jpg" class="img-responsive margin" style="width:100%" alt="Image">
-                </div>
-                <div class="col-sm-4">
-                    <p>Chowder | Dinnerr</p>
-                    <p>Lobster cream, scallops, halibut, lobster, haddock.</p>
-                    <img src="/images/f2.jpg" class="img-responsive margin" style="width:100%" alt="Image">
-                </div>
-                <div class="col-sm-4">
-                    <p>Beef, Bacon & Bleu | Dinner</p>
-                    <p>Pepper port reduction, candied onions, maple balsamic reduction.</p>
-                    <img src="/images/f4.jpg" class="img-responsive margin" style="width:100%" alt="Image">
-                </div>
-                <div class="col-sm-4">
-                    <p>Steam Buns</p>
-                    <p>Braised pork, hoisin, green onion, pickled seasonal vegetables</p>
-                    <img src="/images/f3.jpg" class="img-responsive margin" style="width:100%" alt="Image">
-                </div>
-                <div class="col-sm-4">
-                    <p>Charcuterie Board | Dinner</p>
-                    <p>Daily selection of charcuterie, house breads and condiments.</p>
-                    <img src="/images/f1.jpg" class="img-responsive margin" style="width:100%" alt="Image">
-                </div>
-                <div class="col-sm-4">
-                    <p>Scallop Ceviche | Dinner</p>
-                    <p>Poblano, Tomato, red onion, cilantro, rice chip</p>
-                    <img src="/images/f3.jpg" class="img-responsive margin" style="width:100%" alt="Image">
-                </div>
-
-
-            </div>
+        <div class="col-sm-4">
+            <p>Beef, Bacon & Bleu | Dinner</p>
+            <p>Pepper port reduction, candied onions, maple balsamic reduction.</p>
+            <img src="/images/f4.jpg" class="img-responsive margin" style="width:100%" alt="Image">
+        </div>
+        <div class="col-sm-4">
+            <p>Steam Buns</p>
+            <p>Braised pork, hoisin, green onion, pickled seasonal vegetables</p>
+            <img src="/images/f3.jpg" class="img-responsive margin" style="width:100%" alt="Image">
+        </div>
+        <div class="col-sm-4">
+            <p>Charcuterie Board | Dinner</p>
+            <p>Daily selection of charcuterie, house breads and condiments.</p>
+            <img src="/images/f1.jpg" class="img-responsive margin" style="width:100%" alt="Image">
+        </div>
+        <div class="col-sm-4">
+            <p>Scallop Ceviche | Dinner</p>
+            <p>Poblano, Tomato, red onion, cilantro, rice chip</p>
+            <img src="/images/f3.jpg" class="img-responsive margin" style="width:100%" alt="Image">
         </div>
 
-        <footer>
 
-            <p>&copy; @DateTime.Now.Year - HalifaxDine Application</p>
+    </div>
+</div>
 
-        </footer>
-
-</body>
-</html>
