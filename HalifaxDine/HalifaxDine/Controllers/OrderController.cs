@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace HalifaxDine.Controllers
 {
@@ -32,7 +34,28 @@ namespace HalifaxDine.Controllers
         // GET: Order/Create
         public ActionResult Order(MenuItemModel item)
         {
-            //TransactionModel clientOrder = dao.GetClientOrder()
+            string account_id = User.Identity.GetUserId();
+
+            TransactionModel clientOrder = dao.getclientTransaction(account_id);
+            if (clientOrder== null)
+            {
+                int branch_id = -1;
+                bool exists = false;
+                if (Request.Cookies["UserSettings"] != null)
+                {
+                    string cookieId= Request.Cookies["UserSettings"]["BranchId"];
+                    exists = int.TryParse(cookieId, out branch_id);
+                }
+                if (!exists)
+                {
+                    return RedirectToAction("SelectBranch", "Branch");
+                }
+                ClientModel client = dao.GetClientRow(account_id);
+                clientOrder = new TransactionModel { Client_Id = client.Client_Id, Branch_Id = branch_id , Trans_Date = DateTime.Today.Date, Trans_Status = TransactionStatus.UNPAID};
+
+                dao.InsertClientOrderRow(clientOrder);
+            }
+
 
             return View();
         }

@@ -42,15 +42,37 @@ namespace HalifaxDine.Models
             return model;
         }
 
-        public IEnumerable<BranchModel> GetBranchData()
+        public IEnumerable<BranchModel> GetBranchData(int? branch_Id = null)
         {
             string sql = "select * from branch";
 
+            if (branch_Id != null)
+                sql += " where branch_id = @branch_Id";
 
             IEnumerable<BranchModel> model = Enumerable.Empty<BranchModel>();
             try
             {
                 model = conn.Query<BranchModel>(sql);
+            }
+            catch (Exception e)
+            {
+                ;
+            }
+
+            return model;
+        }
+
+        public IEnumerable<BranchModel> GetEmployeeData(int? branch_Id = null)
+        {
+            string sql = "select * from Employee";
+
+            if (branch_Id != null)
+                sql += " where branch_id = @branch_Id";
+            IEnumerable<BranchModel> model = Enumerable.Empty<BranchModel>();
+
+            try
+            {
+                model = conn.Query<BranchModel>(sql, new { branch_Id });
             }
             catch (Exception e)
             {
@@ -96,6 +118,49 @@ namespace HalifaxDine.Models
             return model;
         }
 
+        public IEnumerable<MenuItemModel> GetClientOrder(string account_id)
+        {
+
+            string sql = @"select MI.* from transaction T
+                            inner join client C on C.client_id = T.CLIENT_ID
+                            INNER JOIN Transaction_Item TI ON TI.TRANS_ID = T.TRANS_ID
+                            INNER JOIN menu_item MI ON MI.MENU_ID = TI.MENU_ID
+                            where trans_status = 'UNPAID'
+                            AND C.Account_Id = @account_id";
+
+            IEnumerable<MenuItemModel> model = Enumerable.Empty<MenuItemModel>();
+
+            try
+            {
+                conn.Query<MenuItemModel>(sql, new { account_id });
+            }
+            catch
+            {
+                ;
+            }
+
+            return model;
+        }
+
+        public TransactionModel getclientTransaction(string account_id)
+        {
+            TransactionModel model = new TransactionModel();
+
+            string sql = @"select * from transaction T
+                            inner join client C on C.client_id = t.client_id
+                            where t.trans_status = 'UNPAID' and C.account_id = @account_id";
+
+            try
+            {
+                model = conn.Query<TransactionModel>(sql, new { account_id }).FirstOrDefault();
+            }
+            catch
+            {
+                ;
+            }
+
+            return model;
+        }
 
         public ClientModel GetClientRow(string Account_Id)
         {
@@ -117,16 +182,20 @@ namespace HalifaxDine.Models
 
         public bool InsertFeedbackRow(FeedbackModel model)
         {
-            string sql = @"INSERT INTO feedback VALUES (DEFAULT, @Client_Id, @Feedback_Comment)";
-
             bool success = false;
-            try
+            using (IDbTransaction trans = conn.BeginTransaction())
             {
-                success = 1 == conn.Execute(sql, new { model.Client_Id, model.Feedback_Comment });
-            }
-            catch (Exception e)
-            {
-                ;
+                string sql = @"INSERT INTO feedback VALUES (DEFAULT, @Client_Id, @Feedback_Comment)";
+
+                try
+                {
+                    success = 1 == conn.Execute(sql, new { model.Client_Id, model.Feedback_Comment });
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                }
             }
 
             return success;
@@ -134,7 +203,11 @@ namespace HalifaxDine.Models
 
         public bool InsertClientRow(ClientModel model)
         {
-            string sql = @"INSERT INTO `halifaxdine`.`client`
+            bool success = false;
+
+            using (IDbTransaction trans = conn.BeginTransaction())
+            {
+                string sql = @"INSERT INTO `halifaxdine`.`client`
                             (`CLIENT_ID`,
                             `CLIENT_FNAME`,
                             `CLIENT_LNAME`,
@@ -142,22 +215,27 @@ namespace HalifaxDine.Models
                             `ACCOUNT_ID`)
  VALUES (DEFAULT, @Client_FName, @Client_LName, @Client_Contact, @Account_Id)";
 
-            bool success = false;
-            try
-            {
-                success = 1 == conn.Execute(sql, new { model.Client_FName, model.Client_LName, model.Client_Contact, model.Account_Id });
-            }
-            catch (Exception e)
-            {
-                ;
-            }
 
+                try
+                {
+                    success = 1 == conn.Execute(sql, new { model.Client_FName, model.Client_LName, model.Client_Contact, model.Account_Id }, trans);
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                }
+            }
             return success;
         }
 
         public bool AddEmployeeRow(EmployeeModel model)
         {
-            string sql = @"INSERT INTO `halifaxdine`.`employee`
+            bool success = false;
+
+            using (IDbTransaction trans = conn.BeginTransaction())
+            {
+                string sql = @"INSERT INTO `halifaxdine`.`employee`
                             (`EMP_ID`,
                             `PRIVILEGE_ID`,
                             `BRANCH_ID`,
@@ -178,16 +256,49 @@ namespace HalifaxDine.Models
                             @EMP_EMAIL,
                             @EMP_PHONE) ";
 
-            bool success = false;
-            try
-            {
-                success = 1 == conn.Execute(sql, new { model.Branch_id,model.Emp_Email,model.Emp_FName,model.Emp_Hire_Date,model.Emp_Hourly_Rate,model.Emp_LName,model.Emp_Phone,model.Privilege_id});
+                try
+                {
+                    success = 1 == conn.Execute(sql, new { model.Branch_id, model.Emp_Email, model.Emp_FName, model.Emp_Hire_Date, model.Emp_Hourly_Rate, model.Emp_LName, model.Emp_Phone, model.Privilege_id }, trans);
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                }
             }
-            catch (Exception e)
-            {
-                ;
-            }
+            return success;
+        }
 
+
+        public bool InsertClientOrderRow(TransactionModel model)
+        {
+            bool success = false;
+
+            using (IDbTransaction trans = conn.BeginTransaction())
+            {
+                string sql = @"INSERT INTO `halifaxdine`.`transaction`
+                                (`TRANS_ID`,
+                                `CLIENT_ID`,
+                                `BRANCH_ID`,
+                                `TRANS_DATETIME`,
+                                `TRANS_STATUS`)
+                                VALUES
+                                (DEFAULT
+                                ,@Client_Id
+                                ,@Branch_Id
+                                ,@Trans_Date
+                                ,@Trans_Status); ";
+
+                try
+                {
+                    success = 1 == conn.Execute(sql, new {model.Client_Id,model.Branch_Id,model.Trans_Date,model.Trans_Status });
+                        trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                }
+            }
             return success;
         }
     }

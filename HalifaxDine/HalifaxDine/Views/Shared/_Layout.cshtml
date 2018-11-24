@@ -8,10 +8,10 @@
     <title>@ViewBag.Title - HalifaxDine Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("head", required: false)
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -34,7 +34,6 @@
                     <li>@Html.AuthorizedActionLink("Function", "AdminFunction", "Home")</li>
                     <li>@Html.AuthorizedActionLink("Function", "ManagerFunction", "Home")</li>
                     <li>@Html.AuthorizedActionLink("Function", "MenuInfo", "Menu")</li>
-                    <li>@Html.AuthorizedActionLink("Function", "ChefFunction", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

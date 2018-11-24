@@ -53,10 +53,19 @@ namespace HalifaxDine
             }
 
             // creating Creating Manager role
-            if (!roleManager.RoleExists("Manager"))
+            if (!roleManager.RoleExists("HeadManager"))
             {
                 var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-                role.Name = "Manager";
+                role.Name = "HeadhManager";
+                roleManager.Create(role);
+
+            }
+
+            // creating Creating Manager role
+            if (!roleManager.RoleExists("BranchManager"))
+            {
+                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                role.Name = "BranchManager";
                 roleManager.Create(role);
 
             }

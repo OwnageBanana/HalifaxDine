@@ -22,10 +22,26 @@ namespace HalifaxDine.Controllers
         }
 
         // GET: Branch
+        [Authorize(Roles ="HeadManager,Admin")]
         public ActionResult BranchInfo()
         {
-            var model = dao.GetBranchData();
+            IEnumerable<BranchModel> model = dao.GetBranchData();
             return View(model);
+        }
+
+        // GET: Branch
+        public ActionResult SelectBranch(BranchModel model)
+        {
+            if (model.Branch_Province == null || model.Branch_Province == "")
+            {
+                IEnumerable<BranchModel> branchData = dao.GetBranchData();
+                return View(branchData);
+            }
+
+            HttpCookie myCookie = new HttpCookie("UserSettings");
+            myCookie["BranchId"] = model.Branch_Id.ToString();
+            Response.Cookies.Add(myCookie);
+            return RedirectToAction("Index","home");
         }
     }
 }

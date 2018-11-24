@@ -381,6 +381,7 @@
     <Content Include="Views\Menu\MenuInfo.cshtml" />
     <Content Include="Views\Feedback\Index.cshtml" />
     <Content Include="Views\Feedback\SubmitFeedback.cshtml" />
+    <Content Include="Views\Branch\SelectBranch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
