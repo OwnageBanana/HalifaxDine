@@ -14,6 +14,5 @@ namespace HalifaxDine.Models
         Chef,
         Attender,
         Client,
-
     }
 }
