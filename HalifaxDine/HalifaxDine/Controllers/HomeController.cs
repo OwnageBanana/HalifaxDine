@@ -48,6 +48,7 @@ namespace HalifaxDine.Controllers
 
             return View();
         }
+
         [Authorize(Roles="Admin")]
         public ActionResult AdminFunction()
         {
@@ -55,24 +56,42 @@ namespace HalifaxDine.Controllers
 
             return RedirectToAction("AdminRegister", "Account", null);
         }
-
-        public ActionResult ManagerFunction()
+        //head mangager function
+        [Authorize(Roles = "HeadManager")]
+        public ActionResult HeadManagerFunction()
         {
-            ViewBag.Message = "Function page.";
-
+            ViewBag.Message = "HeadManager Function page.";
+            //compare result of all restaurant
             return View();
         }
+        [Authorize(Roles = "Client")]
         public ActionResult ClientFunction()
         {
-            ViewBag.Message = "Function page.";
-
-            return View();
+            ViewBag.Message = "Client Function page.";
+            //view menu and place order
+            return RedirectToAction("MenuInfo", "Menu", null);
         }
+        [Authorize(Roles = "Chef")]
         public ActionResult ChefFunction()
         {
-            ViewBag.Message = "Function page.";
-
+            ViewBag.Message = " Chef Function page.";
+            //collect ingredient and prepare food
             return View();
+        }
+        //branch mangager function
+        [Authorize(Roles = "BranchManager")]
+        public ActionResult BranchManagerFunction()
+        {
+            ViewBag.Message = "BranchMangager Function page.";
+            //branch manager should assign to individual branch  
+            return RedirectToAction("BranchInfo", "Branch", null);
+        }
+        [Authorize(Roles = "Attender")]
+        public ActionResult AttenderFunction()
+        {   
+            ViewBag.Message = "Attender Function page.";
+            //collect feedback 
+            return RedirectToAction("Index", "Feedback", null);
         }
 
     }
