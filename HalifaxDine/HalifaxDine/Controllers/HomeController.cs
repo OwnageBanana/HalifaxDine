@@ -91,7 +91,7 @@ namespace HalifaxDine.Controllers
         {   
             ViewBag.Message = "Attender Function page.";
             //collect feedback 
-            return RedirectToAction("index", "Feedback", null);
+            return RedirectToAction("Index", "Feedback", null);
         }
 
     }

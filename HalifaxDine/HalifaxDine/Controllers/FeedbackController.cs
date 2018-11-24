@@ -16,7 +16,8 @@ namespace HalifaxDine.Controllers
             dao = new DatabaseAccess();
         }
         // GET: Feedback
-        [Authorize(Roles = "Admin,Manager")]
+        // add authorization to attender
+        [Authorize(Roles = "Admin,Mangaer,Attender")]
         public ActionResult Index()
         {
             var model = dao.GetFeedbackData();
