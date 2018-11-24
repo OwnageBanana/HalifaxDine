@@ -183,6 +183,7 @@ namespace HalifaxDine.Models
         public bool InsertFeedbackRow(FeedbackModel model)
         {
             bool success = false;
+            conn.Open();
             using (IDbTransaction trans = conn.BeginTransaction())
             {
                 string sql = @"INSERT INTO feedback VALUES (DEFAULT, @Client_Id, @Feedback_Comment)";
@@ -197,14 +198,14 @@ namespace HalifaxDine.Models
                     trans.Rollback();
                 }
             }
-
+            conn.Close();
             return success;
         }
 
         public bool InsertClientRow(ClientModel model)
         {
             bool success = false;
-
+            conn.Open();
             using (IDbTransaction trans = conn.BeginTransaction())
             {
                 string sql = @"INSERT INTO `halifaxdine`.`client`
@@ -226,6 +227,7 @@ namespace HalifaxDine.Models
                     trans.Rollback();
                 }
             }
+            conn.Close();
             return success;
         }
 
@@ -233,6 +235,7 @@ namespace HalifaxDine.Models
         {
             bool success = false;
 
+            conn.Open();
             using (IDbTransaction trans = conn.BeginTransaction())
             {
                 string sql = @"INSERT INTO `halifaxdine`.`employee`
@@ -266,6 +269,7 @@ namespace HalifaxDine.Models
                     trans.Rollback();
                 }
             }
+            conn.Close();
             return success;
         }
 
@@ -273,7 +277,7 @@ namespace HalifaxDine.Models
         public bool InsertClientOrderRow(TransactionModel model)
         {
             bool success = false;
-
+            conn.Open();
             using (IDbTransaction trans = conn.BeginTransaction())
             {
                 string sql = @"INSERT INTO `halifaxdine`.`transaction`
@@ -299,6 +303,8 @@ namespace HalifaxDine.Models
                     trans.Rollback();
                 }
             }
+            conn.Close();
+
             return success;
         }
     }
