@@ -62,7 +62,7 @@ namespace HalifaxDine.Controllers
         {
             ViewBag.Message = "HeadManager Function page.";
             //compare result of all restaurant
-            return View();
+            return RedirectToAction("BranchInfo", "Branch", null);
         }
         [Authorize(Roles = "Client")]
         public ActionResult ClientFunction()
@@ -84,7 +84,7 @@ namespace HalifaxDine.Controllers
         {
             ViewBag.Message = "BranchMangager Function page.";
             //branch manager should assign to individual branch  
-            return RedirectToAction("BranchInfo", "Branch", null);
+            return RedirectToAction("SelectBranch", "Branch", null);
         }
         [Authorize(Roles = "Attender")]
         public ActionResult AttenderFunction()
