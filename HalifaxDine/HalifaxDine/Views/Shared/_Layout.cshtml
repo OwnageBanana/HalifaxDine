@@ -32,11 +32,11 @@
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     <li>@Html.AuthorizedActionLink("Register", "AdminFunction", "Home")</li>
-                    <li>@Html.AuthorizedActionLink("Home", "HeadManagerFunction", "Home")</li>
-                    <li>@Html.AuthorizedActionLink("Feedback", "AttenderFunction", "Menu")</li>
+                    <li>@Html.AuthorizedActionLink("Branch", "HeadManagerFunction", "Home")</li>
+                    <li>@Html.AuthorizedActionLink("Feedback", "AttenderFunction", "Home")</li>
                     <li>@Html.AuthorizedActionLink("Menu", "ClientFunction", "Home")</li>
                     <li>@Html.AuthorizedActionLink("Ingredient", "ChefFunction", "Home")</li>
-                    <li>@Html.AuthorizedActionLink("Home", "BranchManagerFunction", "Home")</li>
+                    <li>@Html.AuthorizedActionLink("Branch", "BranchManagerFunction", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
