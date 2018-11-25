@@ -71,10 +71,10 @@ namespace HalifaxDine
             }
 
             // creating Creating Employee role
-            if (!roleManager.RoleExists("Employee"))
+            if (!roleManager.RoleExists("Attender"))
             {
                 var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-                role.Name = "Employee";
+                role.Name = "Attender";
                 roleManager.Create(role);
 
             }
@@ -83,6 +83,14 @@ namespace HalifaxDine
             {
                 var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
                 role.Name = "Client";
+                roleManager.Create(role);
+            }
+
+            // creating Creating Employee role
+            if (!roleManager.RoleExists("Chef"))
+            {
+                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                role.Name = "Chef";
                 roleManager.Create(role);
 
             }

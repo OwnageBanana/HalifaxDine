@@ -36,8 +36,11 @@ namespace HalifaxDine.Controllers
         {
             string account_id = User.Identity.GetUserId();
 
+            bool orderCreated = true;
+
             TransactionModel clientOrder = dao.getclientTransaction(account_id);
-            if (clientOrder== null)
+            //if an order isn't created yet, create the order and
+            if (clientOrder == null)
             {
                 int branch_id = -1;
                 bool exists = false;
@@ -51,11 +54,11 @@ namespace HalifaxDine.Controllers
                     return RedirectToAction("SelectBranch", "Branch");
                 }
                 ClientModel client = dao.GetClientRow(account_id);
-                clientOrder = new TransactionModel { Client_Id = client.Client_Id, Branch_Id = branch_id , Trans_Date = DateTime.Today.Date, Trans_Status = TransactionStatus.UNPAID};
-
-                dao.InsertClientOrderRow(clientOrder);
+                clientOrder = new TransactionModel { Client_Id = client.Client_Id, Branch_Id = branch_id, Trans_Date = DateTime.Today.Date, Trans_Status = TransactionStatus.UNPAID };
+                orderCreated = dao.InsertClientOrderRow(clientOrder);
             }
 
+            var transaction = dao.getclientTransaction(account_id);
 
             return View();
         }
