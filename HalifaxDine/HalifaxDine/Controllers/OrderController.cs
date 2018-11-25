@@ -36,14 +36,22 @@ namespace HalifaxDine.Controllers
         {
             string account_id = User.Identity.GetUserId();
 
+            var transaction = dao.getclientTransaction(account_id);
+
+            ViewBag.Trans_Id = transaction.Trans_Id;
+
+            if (item.Menu_Id == 0)
+                return View(dao.GetClientOrder(account_id));
+
             bool orderCreated = true;
 
             TransactionModel clientOrder = dao.getclientTransaction(account_id);
-            //if an order isn't created yet, create the order and
+            //if an order isn't created yet, create the order
             if (clientOrder == null)
             {
                 int branch_id = -1;
                 bool exists = false;
+                //get the cookie for the branch selected
                 if (Request.Cookies["UserSettings"] != null)
                 {
                     string cookieId= Request.Cookies["UserSettings"]["BranchId"];
@@ -57,10 +65,14 @@ namespace HalifaxDine.Controllers
                 clientOrder = new TransactionModel { Client_Id = client.Client_Id, Branch_Id = branch_id, Trans_Date = DateTime.Today.Date, Trans_Status = TransactionStatus.UNPAID };
                 orderCreated = dao.InsertClientOrderRow(clientOrder);
             }
+            //add the menu item to the oder
 
-            var transaction = dao.getclientTransaction(account_id);
 
-            return View();
+            dao.InsertClientOrderItemRow(transaction.Trans_Id, item.Menu_Id);
+
+            ViewBag.Trans_Id = transaction.Trans_Id;
+
+            return View(dao.GetClientOrder(account_id));
         }
 
         // POST: Order/Create
@@ -77,6 +89,13 @@ namespace HalifaxDine.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult PayOrder(int Trans_Id)
+        {
+
+            dao.CloseClientOrder(Trans_Id);
+            return RedirectToAction("index", "Home");
         }
 
         // GET: Order/Edit/5

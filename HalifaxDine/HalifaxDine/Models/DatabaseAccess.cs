@@ -132,7 +132,29 @@ namespace HalifaxDine.Models
 
             try
             {
-                conn.Query<MenuItemModel>(sql, new { account_id });
+                model = conn.Query<MenuItemModel>(sql, new { account_id });
+            }
+            catch
+            {
+                ;
+            }
+
+            return model;
+        }
+
+        public IEnumerable<MenuItemModel> CloseClientOrder(int Trans_Id)
+        {
+
+            string sql = @"UPDATE `halifaxdine`.`transaction`
+SET
+`TRANS_STATUS` = 'PAID'
+WHERE `TRANS_ID` = @Trans_Id";
+
+            IEnumerable<MenuItemModel> model = Enumerable.Empty<MenuItemModel>();
+
+            try
+            {
+                conn.Execute(sql, new { Trans_Id });
             }
             catch
             {
@@ -273,7 +295,6 @@ namespace HalifaxDine.Models
             return success;
         }
 
-
         public bool InsertClientOrderRow(TransactionModel model)
         {
             bool success = false;
@@ -295,8 +316,36 @@ namespace HalifaxDine.Models
 
                 try
                 {
-                    success = 1 == conn.Execute(sql, new {model.Client_Id,model.Branch_Id,model.Trans_Date,model.Trans_Status });
-                        trans.Commit();
+                    success = 1 == conn.Execute(sql, new { model.Client_Id, model.Branch_Id, model.Trans_Date, Trans_Status = model.Trans_Status.ToString() });
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                }
+            }
+            conn.Close();
+
+            return success;
+        }
+
+        public bool InsertClientOrderItemRow(int Trans_Id, int Menu_Id)
+        {
+            bool success = false;
+            conn.Open();
+            using (IDbTransaction trans = conn.BeginTransaction())
+            {
+                string sql = @"INSERT INTO `halifaxdine`.`transaction_item`
+                                (`TRANS_ID`,
+                                `MENU_ID`)
+                                VALUES
+                                (@Trans_Id
+                                ,@Menu_Id) ";
+
+                try
+                {
+                    success = 1 == conn.Execute(sql, new { Trans_Id, Menu_Id });
+                    trans.Commit();
                 }
                 catch (Exception e)
                 {

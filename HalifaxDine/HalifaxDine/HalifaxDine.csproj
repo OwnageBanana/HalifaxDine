@@ -388,10 +388,10 @@
     <Content Include="Views\Feedback\Index.cshtml" />
     <Content Include="Views\Feedback\SubmitFeedback.cshtml" />
     <Content Include="Views\Branch\SelectBranch.cshtml" />
+    <Content Include="Views\Order\Order.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Order\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
