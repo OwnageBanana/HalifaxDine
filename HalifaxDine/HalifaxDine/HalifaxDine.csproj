@@ -228,6 +228,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BIController.cs" />
     <Compile Include="Controllers\BranchController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -389,6 +390,7 @@
     <Content Include="Views\Feedback\SubmitFeedback.cshtml" />
     <Content Include="Views\Branch\SelectBranch.cshtml" />
     <Content Include="Views\Order\Order.cshtml" />
+    <Content Include="Views\BI\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

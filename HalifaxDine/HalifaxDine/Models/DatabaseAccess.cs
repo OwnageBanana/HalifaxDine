@@ -146,9 +146,9 @@ namespace HalifaxDine.Models
         {
 
             string sql = @"UPDATE `halifaxdine`.`transaction`
-SET
-`TRANS_STATUS` = 'PAID'
-WHERE `TRANS_ID` = @Trans_Id";
+                                SET
+                                `TRANS_STATUS` = 'PAID'
+                                WHERE `TRANS_ID` = @Trans_Id";
 
             IEnumerable<MenuItemModel> model = Enumerable.Empty<MenuItemModel>();
 
@@ -208,11 +208,17 @@ WHERE `TRANS_ID` = @Trans_Id";
             conn.Open();
             using (IDbTransaction trans = conn.BeginTransaction())
             {
-                string sql = @"INSERT INTO feedback VALUES (DEFAULT, @Client_Id, @Feedback_Comment)";
+                string sql = @"INSERT INTO `halifaxdine`.`feedback`
+                                (`FEEDBACK_ID`,
+                                `CLIENT_ID`,
+                                `BRANCH_ID`,
+                                `FEEDBACK_COMMENT`,
+                                `FEEDBACK_RATING`)
+                                VALUES (DEFAULT, @Client_Id, @Branch_Id, @Feedback_Comment, @Feedback_Rating)";
 
                 try
                 {
-                    success = 1 == conn.Execute(sql, new { model.Client_Id, model.Feedback_Comment });
+                    success = 1 == conn.Execute(sql, new { model.Client_Id, model.Feedback_Comment, model.Branch_Id, model.Feedback_Rating });
                     trans.Commit();
                 }
                 catch (Exception e)

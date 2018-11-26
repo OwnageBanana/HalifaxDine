@@ -9,10 +9,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Client_Id)
+            @Html.DisplayNameFor(model => model.Feedback_Comment)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Feedback_Comment)
+            @Html.DisplayNameFor(model => model.Feedback_Rating)
         </th>
         <th></th>
     </tr>
@@ -20,10 +20,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Client_Id)
+            @Html.DisplayFor(modelItem => item.Feedback_Comment)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Feedback_Comment)
+            @Html.DisplayFor(modelItem => item.Feedback_Rating)
         </td>
     </tr>
 }

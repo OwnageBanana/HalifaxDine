@@ -14,6 +14,5 @@ namespace HalifaxDine.Models
         [StringLength(1000, ErrorMessage = "Looks Like your Message was too long! we are glad you have so much to say though")]
         public string Feedback_Comment { get; set; }
         public int Feedback_Rating { get; set; }
-
     }
 }
