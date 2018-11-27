@@ -62,17 +62,26 @@ namespace HalifaxDine.Models
             return model;
         }
 
-        public IEnumerable<BranchModel> GetEmployeeData(int? branch_Id = null)
+        public IEnumerable<EmployeeModel> GetEmployeeData(int? branch_Id = null, int? Employee_Id = null)
         {
             string sql = "select * from Employee";
 
+
+
             if (branch_Id != null)
+            {
                 sql += " where branch_id = @branch_Id";
-            IEnumerable<BranchModel> model = Enumerable.Empty<BranchModel>();
+                if (Employee_Id != null)
+                    sql += " EMP_Id = @Employee_Id ";
+            }
+            else if (Employee_Id != null)
+                sql += " where EMP_Id = @Employee_Id ";
+
+            IEnumerable<EmployeeModel> model = Enumerable.Empty<EmployeeModel>();
 
             try
             {
-                model = conn.Query<BranchModel>(sql, new { branch_Id });
+                model = conn.Query<EmployeeModel>(sql, new { branch_Id, Employee_Id });
             }
             catch (Exception e)
             {
@@ -202,6 +211,86 @@ namespace HalifaxDine.Models
             return model;
         }
 
+        public ClientModel GetBranchMonthlyPopularity(string Account_Id)
+        {
+            string sql = @"select stats.Month, stats.Branch_Id, branch.BRANCH_DESCRIPTION	,avg(stats.FeedBack_Rating) as avg_rating from (
+    Select extract(MONTH from datetime) as Month, Branch_ID, Feedback_rating from feedback
+    )stats
+    join branch b on stats.Branch_Id = b.Branch_Id
+    group by  month, branch_id
+    ";
+
+
+            ClientModel model = new ClientModel();
+            try
+            {
+                model = conn.Query<ClientModel>(sql, new { Account_Id }).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                ;
+            }
+
+            return model;
+        }
+
+        public ClientModel GetBranchItemPopularity(string Account_Id)
+        {
+            string sql = @"    Select MI.MENU_PRICE,MI.MENU_DESC, B.Branch_Id, B.BRANCH_PROVINCE from transaction_item TI
+                                        inner join menu_item MI on MI.Menu_Id = TI.Menu_Id
+                                        join transaction T on T.Trans_Id = TI.Trans_Id
+                                        join Branch B on B.Branch_Id = T.Branch_Id
+    ";
+
+
+            ClientModel model = new ClientModel();
+            try
+            {
+                model = conn.Query<ClientModel>(sql, new { Account_Id }).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                ;
+            }
+
+            return model;
+        }
+
+
+        public bool UpdateEmployee(EmployeeModel model)
+        {
+            bool success = false;
+            conn.Open();
+            using (IDbTransaction trans = conn.BeginTransaction())
+            {
+                string sql = @"UPDATE `halifaxdine`.`employee`
+                                SET
+                                `PRIVILEGE_ID` = @Privilege_Id,
+                                `BRANCH_ID` = @Branch_Id,
+                                `EMP_FNAME` = @Emp_FName,
+                                `EMP_LNAME` = @Emp_LName,
+                                `EMP_HOURLY_RATE` = @Emp_Hourly_Rate,
+                                `EMP_HIRE_DATE` = @Emp_Hire_Date,
+                                `EMP_EMAIL` = @Emp_Email,
+                                `EMP_PHONE` = @Emp_Phone
+                                WHERE `EMP_ID` = @Emp_Id;";
+
+                try
+                {
+                    success = 1 == conn.Execute(sql, new { model.Emp_Id, model.Privilege_Id, model.Branch_Id, model.Emp_Email, model.Emp_FName, model.Emp_LName, model.Emp_Phone, model.Emp_Hourly_Rate,model.Emp_Hire_Date });
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                }
+            }
+            conn.Close();
+            return success;
+        }
+
+
+
         public bool InsertFeedbackRow(FeedbackModel model)
         {
             bool success = false;
@@ -213,12 +302,13 @@ namespace HalifaxDine.Models
                                 `CLIENT_ID`,
                                 `BRANCH_ID`,
                                 `FEEDBACK_COMMENT`,
-                                `FEEDBACK_RATING`)
-                                VALUES (DEFAULT, @Client_Id, @Branch_Id, @Feedback_Comment, @Feedback_Rating)";
+                                `FEEDBACK_RATING`,
+                                `DATETIME`)
+                                VALUES (DEFAULT, @Client_Id, @Branch_Id, @Feedback_Comment, @Feedback_Rating,@DateTime)";
 
                 try
                 {
-                    success = 1 == conn.Execute(sql, new { model.Client_Id, model.Feedback_Comment, model.Branch_Id, model.Feedback_Rating });
+                    success = 1 == conn.Execute(sql, new { model.Client_Id, model.Feedback_Comment, model.Branch_Id, model.Feedback_Rating, model.DateTime });
                     trans.Commit();
                 }
                 catch (Exception e)
@@ -259,7 +349,7 @@ namespace HalifaxDine.Models
             return success;
         }
 
-        public bool AddEmployeeRow(EmployeeModel model)
+        public bool InsertEmployeeRow(EmployeeModel model)
         {
             bool success = false;
 
@@ -289,7 +379,7 @@ namespace HalifaxDine.Models
 
                 try
                 {
-                    success = 1 == conn.Execute(sql, new { model.Branch_id, model.Emp_Email, model.Emp_FName, model.Emp_Hire_Date, model.Emp_Hourly_Rate, model.Emp_LName, model.Emp_Phone, model.Privilege_id }, trans);
+                    success = 1 == conn.Execute(sql, new { model.Branch_Id, model.Emp_Email, model.Emp_FName, model.Emp_Hire_Date, model.Emp_Hourly_Rate, model.Emp_LName, model.Emp_Phone, model.Privilege_Id }, trans);
                     trans.Commit();
                 }
                 catch (Exception e)

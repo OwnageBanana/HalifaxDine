@@ -9,7 +9,7 @@ namespace HalifaxDine.Controllers
     public class BIController : Controller
     {
         // GET: BI
-        public ActionResult Index()
+        public ActionResult Popularity()
         {
             return View();
         }

@@ -123,13 +123,13 @@ namespace HalifaxDine.Models
             return new EmployeeModel
             {
                 Emp_Email = Email,
-                Branch_id = Branch_Id,
+                Branch_Id = Branch_Id,
                 Emp_FName = FirstName,
                 Emp_LName = LastName,
                 Emp_Hire_Date = System.DateTime.Today,
                 Emp_Hourly_Rate = Wage,
                 Emp_Phone = Phone,
-                Privilege_id = (int)Role,
+                Privilege_Id = (int)Role,
             };
         }
     }

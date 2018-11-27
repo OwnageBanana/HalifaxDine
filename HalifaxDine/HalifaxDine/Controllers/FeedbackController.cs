@@ -50,6 +50,7 @@ namespace HalifaxDine.Controllers
             ClientModel client = dao.GetClientRow(Account_Id);
             model.Client_Id = client.Client_Id;
             model.Branch_Id = branch_id;
+            model.DateTime = DateTime.Now;
 
             ViewBag.Result = dao.InsertFeedbackRow(model);
             return RedirectToAction("Index","Home", null);
