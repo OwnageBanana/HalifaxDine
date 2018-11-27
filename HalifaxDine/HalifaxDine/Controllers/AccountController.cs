@@ -209,7 +209,7 @@ namespace HalifaxDine.Controllers
                 {
                     UserManager.AddToRole(user.Id, role);
 
-                    bool success = new DatabaseAccess().AddEmployeeRow(model.MakeDataModel());
+                    bool success = new DatabaseAccess().InsertEmployeeRow(model.MakeDataModel());
 
                     return RedirectToAction("Index", "Home");
                 }

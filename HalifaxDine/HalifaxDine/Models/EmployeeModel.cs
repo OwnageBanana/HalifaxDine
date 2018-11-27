@@ -9,9 +9,9 @@ namespace HalifaxDine.Models
     public class EmployeeModel
     {
         [Key]
-        public int Emp_id { get; set; }
-        public int Privilege_id { get; set; }
-        public int Branch_id { get; set; }
+        public int Emp_Id { get; set; }
+        public int Privilege_Id { get; set; }
+        public int Branch_Id { get; set; }
         public string Emp_FName { get; set; }
         public string Emp_LName { get; set; }
         public decimal Emp_Hourly_Rate { get; set; }

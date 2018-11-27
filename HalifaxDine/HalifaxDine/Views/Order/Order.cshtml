@@ -1,0 +1,44 @@
+﻿@model IEnumerable<HalifaxDine.Models.MenuItemModel>
+
+<h2>Order</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Menu_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Menu_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Menu_Desc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Menu_Price)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Menu_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Menu_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Menu_Desc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Menu_Price)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { item })
+            </td>
+        </tr>
+    }
+
+</table>
+    @Html.ActionLink("Pay", "PayOrder", new { ViewBag.Trans_Id }, new { @class="btn btn-primary"})

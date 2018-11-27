@@ -30,13 +30,30 @@ namespace HalifaxDine.Controllers
         {
             var Account_Id = User.Identity.GetUserId();
 
+            bool exists = false;
+            int branch_id = -1;
+            if (Request.Cookies["UserSettings"] != null)
+            {
+                string cookieId = Request.Cookies["UserSettings"]["BranchId"];
+                exists = int.TryParse(cookieId, out branch_id);
+            }
+            if (!exists)
+            {
+                return RedirectToAction("SelectBranch", "Branch");
+            }
+
+
             if (model.Feedback_Comment == null)
                 return View();
+
+
             ClientModel client = dao.GetClientRow(Account_Id);
             model.Client_Id = client.Client_Id;
+            model.Branch_Id = branch_id;
+            model.DateTime = DateTime.Now;
 
             ViewBag.Result = dao.InsertFeedbackRow(model);
-            return View();
+            return RedirectToAction("Index","Home", null);
         }
     }
 }

@@ -9,21 +9,33 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Client_Id)
+            @Html.DisplayNameFor(model => model.Branch_Id)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Feedback_Comment)
         </th>
-        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.Feedback_Rating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateTime)
+        </th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
+
         <td>
-            @Html.DisplayFor(modelItem => item.Client_Id)
+            @Html.DisplayFor(modelItem => item.Branch_Id)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Feedback_Comment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Feedback_Rating)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateTime)
         </td>
     </tr>
 }
