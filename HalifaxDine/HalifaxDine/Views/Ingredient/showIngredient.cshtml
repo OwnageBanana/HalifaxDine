@@ -1,0 +1,43 @@
+﻿@model IEnumerable<HalifaxDine.Models.IngredientModel>
+
+<h2>Ingredient</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Ing_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sup_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ing_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ing_Price)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ing_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sup_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ing_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ing_Price)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { item })
+            </td>
+        </tr>
+    }
+
+</table>

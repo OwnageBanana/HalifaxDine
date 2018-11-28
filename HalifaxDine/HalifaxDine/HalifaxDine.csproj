@@ -236,6 +236,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\IngredientController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -395,6 +396,7 @@
     <Content Include="Views\BI\Popularity.cshtml" />
     <Content Include="Views\Employee\GetEmployeeInfo.cshtml" />
     <Content Include="Views\Employee\Index.cshtml" />
+    <Content Include="Views\Ingredient\showIngredient.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
