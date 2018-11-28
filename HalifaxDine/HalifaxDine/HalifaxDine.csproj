@@ -396,7 +396,7 @@
     <Content Include="Views\BI\Popularity.cshtml" />
     <Content Include="Views\Employee\GetEmployeeInfo.cshtml" />
     <Content Include="Views\Employee\Index.cshtml" />
-    <Content Include="Views\Ingredient\showIngredient.cshtml" />
+    <Content Include="Views\Ingredient\IngredientInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

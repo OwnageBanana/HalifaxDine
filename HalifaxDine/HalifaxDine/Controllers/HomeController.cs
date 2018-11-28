@@ -76,7 +76,7 @@ namespace HalifaxDine.Controllers
         {
             ViewBag.Message = " Chef Function page.";
             //collect ingredient and prepare food
-            return RedirectToAction("showIngredient", "Ingredient", null);
+            return RedirectToAction("IngredientInfo", "Ingredient", null);
         }
         //branch mangager function
         [Authorize(Roles = "BranchManager")]
