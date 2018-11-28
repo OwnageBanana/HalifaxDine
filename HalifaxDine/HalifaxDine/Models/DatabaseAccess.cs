@@ -21,7 +21,6 @@ namespace HalifaxDine.Models
         {
             //Added from web.config file at project root
             conn = new ProfiledDbConnection(new MySqlConnection("server = localhost; user id = user; password=pass;  database = HalifaxDine;"), MiniProfiler.Current);
-
         }
 
         public IEnumerable<ClientModel> GetCustomerData()
@@ -211,20 +210,15 @@ namespace HalifaxDine.Models
             return model;
         }
 
-        public ClientModel GetBranchMonthlyPopularity(string Account_Id)
+        public EmployeeModel GetEmployeeRow(string Account_Id)
         {
-            string sql = @"select stats.Month, stats.Branch_Id, branch.BRANCH_DESCRIPTION	,avg(stats.FeedBack_Rating) as avg_rating from (
-    Select extract(MONTH from datetime) as Month, Branch_ID, Feedback_rating from feedback
-    )stats
-    join branch b on stats.Branch_Id = b.Branch_Id
-    group by  month, branch_id
-    ";
+            string sql = "select * from Employee where ACCOUNT_ID = @Account_Id";
 
 
-            ClientModel model = new ClientModel();
+            EmployeeModel model = new EmployeeModel();
             try
             {
-                model = conn.Query<ClientModel>(sql, new { Account_Id }).FirstOrDefault();
+                model = conn.Query<EmployeeModel>(sql, new { Account_Id }).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -234,19 +228,21 @@ namespace HalifaxDine.Models
             return model;
         }
 
-        public ClientModel GetBranchItemPopularity(string Account_Id)
+        public IEnumerable<PopularityModel> GetBranchMonthlyPopularity()
         {
-            string sql = @"    Select MI.MENU_PRICE,MI.MENU_DESC, B.Branch_Id, B.BRANCH_PROVINCE from transaction_item TI
-                                        inner join menu_item MI on MI.Menu_Id = TI.Menu_Id
-                                        join transaction T on T.Trans_Id = TI.Trans_Id
-                                        join Branch B on B.Branch_Id = T.Branch_Id
-    ";
+            string sql = @"select stats.Month, stats.Branch_Id, b.BRANCH_DESCRIPTION ,avg(stats.FeedBack_Rating) as avg_rating from (
+                            Select extract(MONTH from datetime) as Month, Branch_ID, Feedback_rating from feedback
+                            )stats
+                            join branch b on stats.Branch_Id = b.Branch_Id
+                            group by  month, branch_id
+                            ;
+                            ";
 
 
-            ClientModel model = new ClientModel();
+            IEnumerable<PopularityModel> model = Enumerable.Empty<PopularityModel>();
             try
             {
-                model = conn.Query<ClientModel>(sql, new { Account_Id }).FirstOrDefault();
+                model = conn.Query<PopularityModel>(sql );
             }
             catch (Exception e)
             {
@@ -256,6 +252,48 @@ namespace HalifaxDine.Models
             return model;
         }
 
+        public IEnumerable<PopularityModel> GetBranchPopularity()
+        {
+            string sql = @"Select b.Branch_ID, b.branch_description, b.branch_province, avg(Feedback_rating)as avg_rating  from feedback f
+                            join branch b on f.Branch_Id = b.Branch_Id
+                            group by b.Branch_ID, b.branch_description, b.branch_province
+                            ";
+
+            IEnumerable<PopularityModel> model = Enumerable.Empty<PopularityModel>();
+            try
+            {
+                model = conn.Query<PopularityModel>(sql);
+            }
+            catch (Exception e)
+            {
+                ;
+            }
+
+            return model;
+        }
+
+        public IEnumerable<PopularityModel> GetBranchItemPopularity()
+        {
+            string sql = @"select MI.MENU_DESC, B.Branch_Id, B.BRANCH_PROVINCE, count(TI.MENU_ID) as Item_Count
+                             from transaction_item TI
+		                        inner join menu_item MI on MI.Menu_Id = TI.Menu_Id
+		                        join transaction T on T.Trans_Id = TI.Trans_Id
+		                        join Branch B on B.Branch_Id = T.Branch_Id
+                             group by MI.MENU_DESC, B.Branch_Id, B.BRANCH_PROVINCE
+                        ";
+
+            IEnumerable<PopularityModel> model = Enumerable.Empty<PopularityModel>();
+            try
+            {
+                model = conn.Query<PopularityModel>(sql);
+            }
+            catch (Exception e)
+            {
+                ;
+            }
+
+            return model;
+        }
 
         public bool UpdateEmployee(EmployeeModel model)
         {
@@ -288,8 +326,6 @@ namespace HalifaxDine.Models
             conn.Close();
             return success;
         }
-
-
 
         public bool InsertFeedbackRow(FeedbackModel model)
         {
