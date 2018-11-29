@@ -26,6 +26,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Branch_Description)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Branch_Tax)
+        </th>
         <th></th>
     </tr>
 
@@ -45,6 +48,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Branch_Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Branch_Tax)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |

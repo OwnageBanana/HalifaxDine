@@ -385,7 +385,7 @@ namespace HalifaxDine.Models
             return success;
         }
 
-        public bool InsertEmployeeRow(EmployeeModel model)
+        public bool InsertEmployeeRow(EmployeeModel model, Role role)
         {
             bool success = false;
 
@@ -401,7 +401,8 @@ namespace HalifaxDine.Models
                             `EMP_HOURLY_RATE`,
                             `EMP_HIRE_DATE`,
                             `EMP_EMAIL`,
-                            `EMP_PHONE`)
+                            `EMP_PHONE`,
+                            `ACCOUNT_ID`)
                             VALUES
                             (DEFAULT,
                             @PRIVILEGE_ID,
@@ -411,11 +412,12 @@ namespace HalifaxDine.Models
                             @EMP_HOURLY_RATE,
                             @EMP_HIRE_DATE,
                             @EMP_EMAIL,
-                            @EMP_PHONE) ";
+                            @EMP_PHONE,
+                            @ACCOUNT_ID) ";
 
                 try
                 {
-                    success = 1 == conn.Execute(sql, new { model.Branch_Id, model.Emp_Email, model.Emp_FName, model.Emp_Hire_Date, model.Emp_Hourly_Rate, model.Emp_LName, model.Emp_Phone, model.Privilege_Id }, trans);
+                    success = 1 == conn.Execute(sql, new { model.Branch_Id, model.Emp_Email, model.Emp_FName, model.Emp_Hire_Date, model.Emp_Hourly_Rate, model.Emp_LName, model.Emp_Phone, Privilege_Id = role, model.Account_Id }, trans);
                     trans.Commit();
                 }
                 catch (Exception e)

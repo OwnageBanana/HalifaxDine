@@ -22,7 +22,7 @@ namespace HalifaxDine.Controllers
         }
 
         // GET: Branch
-        [Authorize(Roles ="HeadManager,Admin")]
+        [Authorize(Roles = "HeadManager,Admin")]
         public ActionResult BranchInfo()
         {
             IEnumerable<BranchModel> model = dao.GetBranchData();

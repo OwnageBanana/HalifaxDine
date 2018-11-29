@@ -24,41 +24,44 @@ namespace HalifaxDine.Controllers
         {
             string account_id = User.Identity.GetUserId();
 
-            var transaction = dao.getclientTransaction(account_id);
-
-            ViewBag.Trans_Id = transaction.Trans_Id;
-
-            if (item.Menu_Id == 0)
-                return View(dao.GetClientOrder(account_id));
-
             bool orderCreated = true;
+            int branch_id = -1;
+
+            bool exists = false;
+            //get the cookie for the branch selected
+            if (Request.Cookies["UserSettings"] != null)
+            {
+                string cookieId = Request.Cookies["UserSettings"]["BranchId"];
+                exists = int.TryParse(cookieId, out branch_id);
+            }
+            if (!exists)
+            {
+                return RedirectToAction("SelectBranch", "Branch");
+            }
 
             TransactionModel clientOrder = dao.getclientTransaction(account_id);
             //if an order isn't created yet, create the order
             if (clientOrder == null)
             {
-                int branch_id = -1;
-                bool exists = false;
-                //get the cookie for the branch selected
-                if (Request.Cookies["UserSettings"] != null)
-                {
-                    string cookieId = Request.Cookies["UserSettings"]["BranchId"];
-                    exists = int.TryParse(cookieId, out branch_id);
-                }
-                if (!exists)
-                {
-                    return RedirectToAction("SelectBranch", "Branch");
-                }
+                clientOrder = new TransactionModel();
+
+
                 ClientModel client = dao.GetClientRow(account_id);
                 clientOrder = new TransactionModel { Client_Id = client.Client_Id, Branch_Id = branch_id, Trans_Date = DateTime.Today.Date, Trans_Status = TransactionStatus.UNPAID };
                 orderCreated = dao.InsertClientOrderRow(clientOrder);
             }
-            //add the menu item to the oder
+
+            var transaction = dao.getclientTransaction(account_id);
+
+
+            ViewBag.Tax = dao.GetBranchData(branch_id).FirstOrDefault()?.Branch_Tax;
+            ViewBag.Trans_Id = transaction.Trans_Id;
+
+            if (item.Menu_Id == 0)
+                return View(dao.GetClientOrder(account_id));
 
 
             dao.InsertClientOrderItemRow(transaction.Trans_Id, item.Menu_Id);
-
-            ViewBag.Trans_Id = transaction.Trans_Id;
 
             return View(dao.GetClientOrder(account_id));
         }

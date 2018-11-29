@@ -18,7 +18,7 @@
         </th>
         <th></th>
     </tr>
-
+    @{float subtotal = 0;}
     @foreach (var item in Model)
     {
         <tr>
@@ -38,7 +38,15 @@
                 @Html.ActionLink("Delete", "Delete", new { item })
             </td>
         </tr>
+        subtotal += item.Menu_Price;
     }
-
 </table>
-    @Html.ActionLink("Pay", "PayOrder", new { ViewBag.Trans_Id }, new { @class="btn btn-primary"})
+@{
+    float HST = subtotal * ViewBag.Tax;
+    float total = subtotal + HST;
+
+}
+<p>subtotal: @subtotal </p>
+<p>HST: @HST  </p>
+<p>Total: @total  </p>
+@Html.ActionLink("Pay", "PayOrder", new { ViewBag.Trans_Id }, new { @class = "btn btn-primary" })
