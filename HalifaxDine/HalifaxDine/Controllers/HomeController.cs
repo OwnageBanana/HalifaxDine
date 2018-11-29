@@ -87,8 +87,15 @@ namespace HalifaxDine.Controllers
         public ActionResult ChefFunction()
         {
             ViewBag.Message = " Chef Function page.";
-            //collect ingredient and prepare food
-            return RedirectToAction("showIngredient", "Ingredient", null);
+            //collect ingredient
+            return RedirectToAction("IngredientInfo", "Ingredient", null);
+        }
+        [Authorize(Roles = "Chef")]
+        public ActionResult ChefFunction_Menu()
+        {
+            ViewBag.Message = " Chef Function page.";
+            //collect ingredient list in the menu
+            return RedirectToAction("MenuIngredientInfo", "MenuIngredient", null);
         }
 
         [Authorize(Roles = "Attender")]

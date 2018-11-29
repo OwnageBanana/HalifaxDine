@@ -8,19 +8,19 @@ using System.Web.Mvc;
 namespace HalifaxDine.Controllers
 {
         [Authorize(Roles ="Admin, Chef")]
-    public class IngredientController : Controller
+    public class MenuIngredientController : Controller
     {
         DatabaseAccess dao;
-        public IngredientController()
+        public MenuIngredientController()
         {
             dao = new DatabaseAccess();
         }
 
-        // GET: Ingredient_Info
-        public ActionResult IngredientInfo()
-        {
-            var model = dao.GetIngredientData();
-            return View(model);
-        }
+        //GET: menu_ingredient item
+    public ActionResult MenuIngredientInfo()
+    {
+        var model = dao.GetMenuIngredientData();
+        return View(model);
+    }
 }
 }

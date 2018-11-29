@@ -315,7 +315,7 @@ namespace HalifaxDine.Models
 
                 try
                 {
-                    success = 1 == conn.Execute(sql, new { model.Emp_Id, model.Privilege_Id, model.Branch_Id, model.Emp_Email, model.Emp_FName, model.Emp_LName, model.Emp_Phone, model.Emp_Hourly_Rate,model.Emp_Hire_Date });
+                    success = 1 == conn.Execute(sql, new { model.Emp_Id, model.Privilege_Id, model.Branch_Id, model.Emp_Email, model.Emp_FName, model.Emp_LName, model.Emp_Phone, model.Emp_Hourly_Rate, model.Emp_Hire_Date });
                     trans.Commit();
                 }
                 catch (Exception e)
@@ -587,6 +587,24 @@ namespace HalifaxDine.Models
             try
             {
                 model = conn.Query<IngredientModel>(sql);
+            }
+            catch (Exception e)
+            {
+                ;
+            }
+
+            return model;
+        }
+        //GET: menu_ingredient_item for chef
+        public IEnumerable<MenuIngredientModel> GetMenuIngredientData()
+        {
+            string sql = "select * from MENU_Ingredient";
+
+
+            IEnumerable<MenuIngredientModel> model = Enumerable.Empty<MenuIngredientModel>();
+            try
+            {
+                model = conn.Query<MenuIngredientModel>(sql);
             }
             catch (Exception e)
             {
