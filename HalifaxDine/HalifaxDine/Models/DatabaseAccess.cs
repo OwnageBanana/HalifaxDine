@@ -488,5 +488,23 @@ namespace HalifaxDine.Models
 
             return success;
         }
+
+        public IEnumerable<IngredientModel> GetIngredientData()
+        {
+            string sql = "select * from Ingredient";
+
+
+            IEnumerable<IngredientModel> model = Enumerable.Empty<IngredientModel>();
+            try
+            {
+                model = conn.Query<IngredientModel>(sql);
+            }
+            catch (Exception e)
+            {
+                ;
+            }
+
+            return model;
+        }
     }
 }
