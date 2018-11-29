@@ -51,7 +51,7 @@ namespace HalifaxDine.Models
             IEnumerable<BranchModel> model = Enumerable.Empty<BranchModel>();
             try
             {
-                model = conn.Query<BranchModel>(sql);
+                model = conn.Query<BranchModel>(sql, new { branch_Id });
             }
             catch (Exception e)
             {
@@ -488,6 +488,95 @@ namespace HalifaxDine.Models
 
             return success;
         }
+
+        public bool InsertMenuItemRow(MenuItemModel model)
+        {
+
+            bool success = false;
+            conn.Open();
+            using (IDbTransaction trans = conn.BeginTransaction())
+            {
+                string sql = @"INSERT INTO `halifaxdine`.`menu_item`
+                                (`MENU_ID`,
+                                `MENU_PRICE`,
+                                `MENU_DESC`,
+                                `MENU_NAME`)
+                                VALUES
+                                (Default,
+                                @Menu_Price,
+                                @Menu_Desc,
+                                @Menu_Name)";
+
+                try
+                {
+                    success = 1 == conn.Execute(sql, new { model.Menu_Price,model.Menu_Name, model.Menu_Desc });
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                }
+            }
+            conn.Close();
+
+            return success;
+        }
+
+        public bool UpdateMenuItemRow(MenuItemModel model)
+        {
+
+            bool success = false;
+            conn.Open();
+            using (IDbTransaction trans = conn.BeginTransaction())
+            {
+                string sql = @"UPDATE `halifaxdine`.`menu_item`
+                                  SET
+                                  `MENU_PRICE` = @Menu_Price,
+                                  `MENU_DESC` = @Menu_Desc,
+                                  `MENU_NAME` = @Menu_Name
+                                  WHERE `MENU_ID` = @Menu_Id
+                                  ";
+
+                try
+                {
+                    success = 1 == conn.Execute(sql, new { model.Menu_Id, model.Menu_Price, model.Menu_Name, model.Menu_Desc });
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                }
+            }
+            conn.Close();
+
+            return success;
+        }
+        public bool DeleteMenuItemRow(MenuItemModel model)
+        {
+
+            bool success = false;
+            conn.Open();
+            using (IDbTransaction trans = conn.BeginTransaction())
+            {
+                string sql = @"delete from `halifaxdine`.`menu_item`
+                                  WHERE `MENU_ID` = @Menu_Id
+                                  ";
+
+                try
+                {
+                    success = 1 == conn.Execute(sql, new { model.Menu_Id });
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                }
+            }
+            conn.Close();
+
+            return success;
+        }
+
 
         public IEnumerable<IngredientModel> GetIngredientData()
         {

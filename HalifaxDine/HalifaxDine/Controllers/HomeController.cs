@@ -7,13 +7,15 @@ using System.Web.Mvc;
 
 namespace HalifaxDine.Controllers
 {
-    [Authorize()]
     public class HomeController : Controller
     {
+        DatabaseAccess dao;
         public HomeController()
         {
-
+            dao = new DatabaseAccess();
         }
+
+        [AllowAnonymous]
         public ActionResult Index()
         {
             if (User.Identity.IsAuthenticated)
@@ -36,17 +38,33 @@ namespace HalifaxDine.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Halifax dine is an atlantic dining experience! we serve" +
+                "some of the freshest food that atlantic canada has to offer for the whole family.";
             return View();
         }
 
+        [Authorize(Roles = "Client")]
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
 
-            return View();
+            bool exists = false;
+            int branch_id = -1;
+            if (Request.Cookies["UserSettings"] != null)
+            {
+                string cookieId = Request.Cookies["UserSettings"]["BranchId"];
+                exists = int.TryParse(cookieId, out branch_id);
+            }
+            if (!exists)
+            {
+                return RedirectToAction("SelectBranch", "Branch");
+            }
+
+            BranchModel model = dao.GetBranchData(branch_id).FirstOrDefault();
+
+            return View(model);
         }
 
         [Authorize(Roles="Admin")]
@@ -56,6 +74,40 @@ namespace HalifaxDine.Controllers
 
             return RedirectToAction("AdminRegister", "Account", null);
         }
+
+        [Authorize(Roles = "Client")]
+        public ActionResult ClientFunction()
+        {
+            ViewBag.Message = "Client Function page.";
+            //view menu and place order
+            return RedirectToAction("MenuInfo", "Menu", null);
+        }
+
+        [Authorize(Roles = "Chef")]
+        public ActionResult ChefFunction()
+        {
+            ViewBag.Message = " Chef Function page.";
+            //collect ingredient and prepare food
+            return RedirectToAction("showIngredient", "Ingredient", null);
+        }
+
+        [Authorize(Roles = "Attender")]
+        public ActionResult AttenderFunction()
+        {
+            ViewBag.Message = "Attender Function page.";
+            //collect feedback
+            return RedirectToAction("Index", "Feedback", null);
+        }
+
+        //branch mangager function
+        [Authorize(Roles = "BranchManager")]
+        public ActionResult BranchManagerFunction()
+        {
+            ViewBag.Message = "BranchMangager Function page.";
+            //branch manager should assign to individual branch
+            return RedirectToAction("SelectBranch", "Branch", null);
+        }
+
         //head mangager function
         [Authorize(Roles = "HeadManager")]
         public ActionResult HeadManagerFunction()
@@ -64,35 +116,5 @@ namespace HalifaxDine.Controllers
             //compare result of all restaurant
             return RedirectToAction("BranchInfo", "Branch", null);
         }
-        [Authorize(Roles = "Client")]
-        public ActionResult ClientFunction()
-        {
-            ViewBag.Message = "Client Function page.";
-            //view menu and place order
-            return RedirectToAction("MenuInfo", "Menu", null);
-        }
-        [Authorize(Roles = "Chef")]
-        public ActionResult ChefFunction()
-        {
-            ViewBag.Message = " Chef Function page.";
-            //collect ingredient and prepare food
-            return RedirectToAction("showIngredient", "Ingredient", null);
-        }
-        //branch mangager function
-        [Authorize(Roles = "BranchManager")]
-        public ActionResult BranchManagerFunction()
-        {
-            ViewBag.Message = "BranchMangager Function page.";
-            //branch manager should assign to individual branch  
-            return RedirectToAction("SelectBranch", "Branch", null);
-        }
-        [Authorize(Roles = "Attender")]
-        public ActionResult AttenderFunction()
-        {   
-            ViewBag.Message = "Attender Function page.";
-            //collect feedback 
-            return RedirectToAction("Index", "Feedback", null);
-        }
-
     }
 }
