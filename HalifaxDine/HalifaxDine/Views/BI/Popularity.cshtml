@@ -6,35 +6,60 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 }
 <h2>BI Reports</h2>
-<h4>Month Over Month Popularity</h4>
-<div id="chart">
-
+<div class="row">
+    <div class="col-lg-8">
+        <h4>Month Over Month Branch Popularity</h4>
+        <div id="chart">
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <h4>Overall Branch Popularity</h4>
+        <div id="chart2">
+        </div>
+    </div>
 </div>
 
 @section Scripts {
     <script>
 
-        function Feedback(monthly) {
+        function MonthylFeedback(monthly) {
 
             var layout = { barmode: 'group' };
 
             Plotly.newPlot('chart', monthly, layout);
         }
-        var dataDictionary = {};
-        function getData() {
+        function getMonthlyData() {
 
             dataDictionary = {};
 
-            var getDataUrl = "@Url.Action("PopularityData")";
+            var getDataUrl = "@Url.Action("MonthlyPopularityData")";
 
             $.getJSON(getDataUrl, function (data) {
-                dataDictionary = data;
-                Feedback(dataDictionary);
+                MonthylFeedback(data);
+            });
+        }
+
+        function overallFeedback(overall) {
+
+            Plotly.newPlot('chart2', overall);
+        }
+
+        function getOverallData() {
+
+            dataDictionary = {};
+
+            var getDataUrl = "@Url.Action("OverallPopularityData")";
+
+            $.getJSON(getDataUrl, function (data) {
+                overallFeedback(data);
 
             });
         }
 
-        $(document).ready(function () { getData(); });
+        $(document).ready(function () {
+            getMonthlyData();
+            getOverallData();
+        });
 
     </script>
 }
