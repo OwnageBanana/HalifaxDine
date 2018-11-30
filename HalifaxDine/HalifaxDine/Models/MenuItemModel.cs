@@ -19,6 +19,7 @@ namespace HalifaxDine.Models
         public string Menu_Desc { get; set; }
         [Required]
         [DisplayName("Price")]
+        [DisplayFormat(DataFormatString = "{0:C}")]
         public float Menu_Price { get; set; }
     }
 }

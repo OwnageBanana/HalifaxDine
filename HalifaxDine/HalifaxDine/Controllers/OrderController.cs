@@ -57,6 +57,8 @@ namespace HalifaxDine.Controllers
             ViewBag.Tax = dao.GetBranchData(branch_id).FirstOrDefault()?.Branch_Tax;
             ViewBag.Trans_Id = transaction.Trans_Id;
 
+            ViewBag.MenuInfo = dao.GetMenuData();
+
             if (item.Menu_Id == 0)
                 return View(dao.GetClientOrder(account_id));
 
@@ -66,12 +68,28 @@ namespace HalifaxDine.Controllers
             return View(dao.GetClientOrder(account_id));
         }
 
-        [Authorize(Roles = "Client")]
+
+        [Authorize(Roles = "Client,Attender")]
+        public ActionResult Menu()
+        {
+            return PartialView("_MenuPartial",dao.GetMenuData());
+        }
+
+
+        [Authorize(Roles = "Client,Attender")]
         public ActionResult PayOrder(int Trans_Id)
         {
 
             dao.CloseClientOrder(Trans_Id);
             return RedirectToAction("index", "Home");
+        }
+
+        [Authorize(Roles = "Client,Attender")]
+        public ActionResult Delete(int Trans_Id, int Menu_Id)
+        {
+
+            dao.DeleteClientItemRow(Trans_Id, Menu_Id);
+            return RedirectToAction("order", "order");
         }
     }
 }

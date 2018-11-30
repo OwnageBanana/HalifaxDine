@@ -1,0 +1,21 @@
+﻿<h1 class="my-4">
+    Menu
+    <small>Details</small>
+</h1>
+<div class="row">
+    @foreach (var item in ViewBag.MenuInfo)
+    {
+        <div class="col-lg-6">
+            <b>@item.Menu_Name</b>
+            <br />
+            <p>
+                @item.Menu_Desc
+            </p>
+            <div style="width:100%">
+                @item.Menu_Price
+                <a class="btn btn-primary" href="/Order/Order?Menu_Id=@item.Menu_Id">Order</a>
+            </div>
+        </div>
+    }
+</div>
+

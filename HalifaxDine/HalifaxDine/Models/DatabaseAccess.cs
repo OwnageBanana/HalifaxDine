@@ -491,6 +491,37 @@ namespace HalifaxDine.Models
             return success;
         }
 
+
+        public bool DeleteClientItemRow(int Trans_Id, int Menu_Id)
+        {
+
+            bool success = false;
+            conn.Open();
+            using (IDbTransaction trans = conn.BeginTransaction())
+            {
+                string sql = @"delete from `halifaxdine`.`transaction_item`
+                                  WHERE `MENU_ID` = @Menu_Id
+                                    and `TRANS_ID` = @Trans_Id
+                                    limit 1
+                                  ";
+
+                try
+                {
+                    success = 1 == conn.Execute(sql, new { Menu_Id, Trans_Id });
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                }
+            }
+            conn.Close();
+
+            return success;
+        }
+
+
+
         public bool InsertMenuItemRow(MenuItemModel model)
         {
 
@@ -553,6 +584,7 @@ namespace HalifaxDine.Models
 
             return success;
         }
+
         public bool DeleteMenuItemRow(MenuItemModel model)
         {
 
