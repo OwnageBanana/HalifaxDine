@@ -9,7 +9,7 @@ namespace HalifaxDine.Models
     public class PopularityModel
     {
         [DisplayName("Month")]
-        public int? Month { get; set; }
+        public int Month { get; set; }
         [DisplayName("Branch Id")]
         public int Branch_id { get; set; }
         [DisplayName("Province")]

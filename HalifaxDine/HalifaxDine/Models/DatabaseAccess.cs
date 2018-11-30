@@ -230,7 +230,7 @@ namespace HalifaxDine.Models
 
         public IEnumerable<PopularityModel> GetBranchMonthlyPopularity()
         {
-            string sql = @"select stats.Month, stats.Branch_Id, b.BRANCH_DESCRIPTION ,avg(stats.FeedBack_Rating) as avg_rating from (
+            string sql = @"select stats.Month, stats.Branch_Id, b.Branch_Province ,avg(stats.FeedBack_Rating) as avg_rating from (
                             Select extract(MONTH from datetime) as Month, Branch_ID, Feedback_rating from feedback
                             )stats
                             join branch b on stats.Branch_Id = b.Branch_Id

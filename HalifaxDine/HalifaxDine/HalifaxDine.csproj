@@ -247,6 +247,7 @@
     <Compile Include="Models\BranchModel.cs" />
     <Compile Include="Models\MenuIngredientModel.cs" />
     <Compile Include="Models\PopularityModel.cs" />
+    <Compile Include="Models\PopularityViewModel.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\ClientModel.cs" />
     <Compile Include="Models\DatabaseAccess.cs" />

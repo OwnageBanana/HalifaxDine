@@ -3,28 +3,23 @@
     ViewBag.Title = "Index";
 }
 @section Head{
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 }
 <h2>BI Reports</h2>
-<div id="myDiv">
+<h4>Month Over Month Popularity</h4>
+<div id="chart">
 
 </div>
 
 @section Scripts {
     <script>
-        var data = [{
-            values: [19, 26, 55],
-            labels: ['Residential', 'Non-Residential', 'Utility'],
-            type: 'pie'
-        }];
 
-        var layout = {
-            height: 400,
-            width: 500
-        };
+        function Feedback(monthly) {
 
-        Plotly.newPlot('myDiv', data, layout);
+            var layout = { barmode: 'group' };
 
+            Plotly.newPlot('chart', monthly, layout);
+        }
         var dataDictionary = {};
         function getData() {
 
@@ -33,15 +28,13 @@
             var getDataUrl = "@Url.Action("PopularityData")";
 
             $.getJSON(getDataUrl, function (data) {
-                for (var prop in data) {
-                    if (data.hasOwnProperty(prop)) {
-                        dataDictionary[prop] = data[prop];
-                    }
-                }
+                dataDictionary = data;
+                Feedback(dataDictionary);
+
             });
         }
 
         $(document).ready(function () { getData(); });
 
     </script>
-    }
+}

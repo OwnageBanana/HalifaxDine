@@ -33,7 +33,7 @@ namespace HalifaxDine.Controllers
         [Authorize(Roles = "HeadManager,BranchManager,Admin")]
         public ActionResult GetEmployeeList()
         {
-            IEnumerable<EmployeeModel> model = dao.GetEmployeeData();
+            IEnumerable<EmployeeModel> model = dao.GetEmployeeData().OrderBy(x=>x.Branch_Id).ThenBy(x=>x.Privilege_Id);
             return View(model);
         }
 
