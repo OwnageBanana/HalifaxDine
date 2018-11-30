@@ -17,6 +17,11 @@
         <div id="chart2">
         </div>
     </div>
+    <div class="col-lg-12">
+        <h4>Item Popularity</h4>
+        <div id="chart3">
+        </div>
+    </div>
 </div>
 
 @section Scripts {
@@ -56,9 +61,27 @@
             });
         }
 
+                function itemPopularity(items) {
+
+            Plotly.newPlot('chart3', items);
+        }
+
+        function getItemPopularity() {
+
+            dataDictionary = {};
+
+            var getDataUrl = "@Url.Action("ItemPopularity")";
+
+            $.getJSON(getDataUrl, function (data) {
+                itemPopularity(data);
+
+            });
+        }
+
         $(document).ready(function () {
             getMonthlyData();
             getOverallData();
+            getItemPopularity();
         });
 
     </script>

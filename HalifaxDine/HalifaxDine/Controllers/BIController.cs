@@ -69,8 +69,8 @@ namespace HalifaxDine.Controllers
 
             PopularityViewModel result = new PopularityViewModel();
 
-            result.x = model.Select(x => x.Branch_Province).ToArray<string>();
-            result.y = model.Select(x => x.Avg_Rating).ToArray<float>();
+            result.x = model.Select(x => x.Menu_Desc).ToArray<string>();
+            result.y = model.Select(x => (float)x.Item_Count).ToArray<float>();
 
             //result needs to be in an array for the JS library
             return Json(new PopularityViewModel[] { result }, JsonRequestBehavior.AllowGet);

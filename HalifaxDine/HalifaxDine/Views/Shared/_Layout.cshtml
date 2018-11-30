@@ -30,7 +30,7 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.AuthorizedActionLink("Contact", "Contact", "Home")</li>
                     <li>@Html.AuthorizedActionLink("Order", "Order", "Order")</li>
                     <li>@Html.AuthorizedActionLink("Register", "AdminRegister", "Account")</li>
                     <li>@Html.AuthorizedActionLink("Branch", "HeadManagerFunction", "Home")</li>
@@ -43,6 +43,7 @@
                     <li>@Html.AuthorizedActionLink("Send Feedback", "SubmitFeedback", "Feedback")</li>
                     <li>@Html.AuthorizedActionLink("Ingredient", "ChefFunction", "Home")</li>
                     <li>@Html.AuthorizedActionLink("Ingredient in Menu", "ChefFunction_Menu", "Home")</li>
+                    <li>@Html.AuthorizedActionLink("Reports", "Popularity", "BI")</li>
 
                 </ul>
                 @Html.Partial("_LoginPartial")
