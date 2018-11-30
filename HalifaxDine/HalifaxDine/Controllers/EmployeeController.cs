@@ -23,14 +23,22 @@ namespace HalifaxDine.Controllers
             return View();
         }
 
-    [Authorize(Roles ="HeadManager,BranchManager,Admin")]
+        [Authorize(Roles = "HeadManager,BranchManager,Admin")]
         public ActionResult GetEmployeeInfo(int Employee_Id)
         {
             EmployeeModel model = dao.GetEmployeeData(null, Employee_Id).FirstOrDefault();
             return View(model);
         }
 
-    [Authorize(Roles ="HeadManager,BranchManager,Admin")]
+        [Authorize(Roles = "HeadManager,BranchManager,Admin")]
+        public ActionResult GetEmployeeList()
+        {
+            IEnumerable<EmployeeModel> model = dao.GetEmployeeData();
+            return View(model);
+        }
+
+
+        [Authorize(Roles ="HeadManager,BranchManager,Admin")]
         public ActionResult EditEmployee(EmployeeModel model)
         {
             dao.UpdateEmployee(model);

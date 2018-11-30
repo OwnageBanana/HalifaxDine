@@ -1,0 +1,79 @@
+﻿@model IEnumerable<HalifaxDine.Models.EmployeeModel>
+
+@{
+    ViewBag.Title = "GetEmployeeList";
+}
+
+<h2>GetEmployeeList</h2>
+
+<p>
+    @Html.ActionLink("Add New Employee", "AdminRegister", "Register")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Privilege_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Branch_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Emp_FName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Emp_LName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Emp_Hourly_Rate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Emp_Hire_Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Emp_Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Emp_Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Account_Id)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Privilege_Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Branch_Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Emp_FName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Emp_LName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Emp_Hourly_Rate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Emp_Hire_Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Emp_Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Emp_Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Account_Id)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "GetEmployeeInfo", new { Employee_Id = item.Emp_Id })
+        </td>
+    </tr>
+}
+
+</table>

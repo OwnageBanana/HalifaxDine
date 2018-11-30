@@ -399,6 +399,7 @@
     <Content Include="Views\Menu\Create.cshtml" />
     <Content Include="Views\Menu\EditMenuItems.cshtml" />
     <Content Include="Views\Menu\Update.cshtml" />
+    <Content Include="Views\Employee\GetEmployeeList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
