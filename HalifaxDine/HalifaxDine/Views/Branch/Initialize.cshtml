@@ -1,0 +1,51 @@
+﻿@model HalifaxDine.Models.BranchModel
+
+@{
+    ViewBag.Title = "Initialize Best Restaurant";
+}
+
+<h2>Initialize Best Restaurant</h2>
+
+@using (Html.BeginForm("InitiazlizeBranch", "Branch", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h1>Update</h1>
+        <hr />
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.Branch_Id)
+        @Html.HiddenFor(model => model.Branch_City)
+        @Html.HiddenFor(model => model.Branch_Description)
+        @Html.HiddenFor(model => model.Branch_Tax)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Branch_Province, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Branch_Province, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Branch_Province, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Branch_Is_Best_Resturant, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Branch_Is_Best_Resturant, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Branch_Is_Best_Resturant, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Update Info" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "BranchInfo")
+</div>

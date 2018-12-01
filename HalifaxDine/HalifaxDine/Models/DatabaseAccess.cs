@@ -294,6 +294,39 @@ namespace HalifaxDine.Models
 
             return model;
         }
+        // UPDATE BRANCH INFO
+        public bool UpdateBranch(BranchModel model)
+        {
+
+            bool success = false;
+            conn.Open();
+            using (IDbTransaction trans = conn.BeginTransaction())
+            {
+                string sql = @"UPDATE `halifaxdine`.`Branch`
+                                  SET
+                                  `BRANCH_City` = @Branch_City,
+                                  `BRANCH_Province` = @Branch_Province,
+                                  `BRANCH_Is_Best_Resturant` = @Branch_Is_Best_Resturant,
+                                  `BRANCH_Tax` = @Branch_Tax,
+                                  `BRANCH_Description` = @Branch_Description
+                                  WHERE `BRANCH_ID` = @Branch_Id
+                                  ";
+                
+                try
+                {
+                    success = 1 == conn.Execute(sql, new { model.Branch_Id, model.Branch_City, model.Branch_Description, model.Branch_Is_Best_Resturant, model.Branch_Province, model.Branch_Tax });
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                }
+            }
+            conn.Close();
+
+            return success;
+        }
+
 
         public bool UpdateEmployee(EmployeeModel model)
         {

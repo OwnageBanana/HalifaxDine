@@ -43,5 +43,21 @@ namespace HalifaxDine.Controllers
             Response.Cookies.Add(myCookie);
             return RedirectToAction("Index","home");
         }
+
+        // update branch info
+        [Authorize(Roles = "Admin,,HeadManager")]
+        public ActionResult Initialize(BranchModel model)
+        {
+            return View(model);
+        }
+
+        // Update Branch Info
+        [Authorize(Roles = "Admin,HeadManager")]
+        public ActionResult InitiazlizeBranch(BranchModel model)
+        {
+            bool success = dao.UpdateBranch(model);
+            return RedirectToAction("Initialize", model);
+
+        }
     }
 }
