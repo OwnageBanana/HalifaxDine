@@ -13,7 +13,7 @@
             </p>
             <div style="width:100%">
                 @item.Menu_Price
-                <a class="btn btn-primary" href="/Order/Order?Menu_Id=@item.Menu_Id">Order</a>
+                <a class="btn btn-primary" href="/Order/Order?Menu_Id=@item.Menu_Id&Client_Id=@ViewBag.Client_Id">Order</a>
             </div>
         </div>
     }

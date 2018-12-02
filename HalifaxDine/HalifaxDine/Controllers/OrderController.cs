@@ -18,28 +18,61 @@ namespace HalifaxDine.Controllers
             dao = new DatabaseAccess();
         }
 
+
+        [Authorize(Roles = "Attender")]
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         // GET: Order/Create
-        [Authorize(Roles = "Client")]
-        public ActionResult Order(MenuItemModel item)
+        [Authorize(Roles = "Client, Attender")]
+        public ActionResult Order(MenuItemModel item, int? Client_Id = null)
         {
             string account_id = User.Identity.GetUserId();
 
             bool orderCreated = true;
             int branch_id = -1;
+            bool branchIdSet = false;
 
-            bool exists = false;
+            var employee = dao.GetEmployeeRow(account_id);
+
+            TransactionModel clientOrder = null;
+            if (employee != null)
+            {
+                if (Client_Id == null)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                var client = dao.GetClientRow(Client_Id.Value);
+                if (client == null)
+                {
+                    ViewBag.Error = "Client Id was not found";
+                    return RedirectToAction("Index");
+                }
+                account_id = client.Account_Id;
+                clientOrder = dao.getclientTransaction(account_id);
+                branch_id = employee.Branch_Id;
+                branchIdSet = true;
+                ViewBag.Client_Id = client.Client_Id;
+            }
+            else
+            {
+                clientOrder = dao.getclientTransaction(account_id);
+            }
+
             //get the cookie for the branch selected
             if (Request.Cookies["UserSettings"] != null)
             {
                 string cookieId = Request.Cookies["UserSettings"]["BranchId"];
-                exists = int.TryParse(cookieId, out branch_id);
+                branchIdSet = int.TryParse(cookieId, out branch_id);
             }
-            if (!exists)
+            if (!branchIdSet)
             {
                 return RedirectToAction("SelectBranch", "Branch");
             }
 
-            TransactionModel clientOrder = dao.getclientTransaction(account_id);
             //if an order isn't created yet, create the order
             if (clientOrder == null)
             {

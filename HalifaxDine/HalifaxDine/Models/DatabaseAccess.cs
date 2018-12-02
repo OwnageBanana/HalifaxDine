@@ -192,6 +192,24 @@ namespace HalifaxDine.Models
             return model;
         }
 
+        public ClientModel GetClientRow(int Client_Id)
+        {
+            string sql = "select * from client where Client_Id = @Client_Id";
+
+
+            ClientModel model = new ClientModel();
+            try
+            {
+                model = conn.Query<ClientModel>(sql, new { Client_Id }).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                ;
+            }
+
+            return model;
+        }
+
         public ClientModel GetClientRow(string Account_Id)
         {
             string sql = "select * from client where Account_Id = @Account_Id";
@@ -311,7 +329,7 @@ namespace HalifaxDine.Models
                                   `BRANCH_Description` = @Branch_Description
                                   WHERE `BRANCH_ID` = @Branch_Id
                                   ";
-                
+
                 try
                 {
                     success = 1 == conn.Execute(sql, new { model.Branch_Id, model.Branch_City, model.Branch_Description, model.Branch_Is_Best_Resturant, model.Branch_Province, model.Branch_Tax });
