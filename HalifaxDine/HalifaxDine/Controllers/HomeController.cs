@@ -116,7 +116,7 @@ namespace HalifaxDine.Controllers
         }
 
         //head mangager function
-        [Authorize(Roles = "HeadManager")]
+        [Authorize(Roles = "Admin,HeadManager")]
         public ActionResult HeadManagerFunction()
         {
             ViewBag.Message = "HeadManager Function page.";
