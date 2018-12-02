@@ -40,7 +40,7 @@
 
             dataDictionary = {};
 
-            var getDataUrl = "@Url.Action("MonthlyPopularityData")";
+            var getDataUrl = "@Url.Action("MonthlyPopularityData", new { Branch_Id = ViewBag.Branch_Id })";
 
             $.getJSON(getDataUrl, function (data) {
                 MonthylFeedback(data);
@@ -54,14 +54,13 @@
             };
 
             Plotly.newPlot('chart2', overall, layout);
-
         }
 
         function getOverallData() {
 
             dataDictionary = {};
 
-            var getDataUrl = "@Url.Action("OverallPopularityData")";
+            var getDataUrl = "@Url.Action("OverallPopularityData", new { Branch_Id= ViewBag.Branch_Id })";
 
             $.getJSON(getDataUrl, function (data) {
                 overallFeedback(data);
@@ -69,7 +68,7 @@
             });
         }
 
-        function itemPopularity(items) {
+                function itemPopularity(items) {
 
             Plotly.newPlot('chart3', items);
         }
@@ -78,7 +77,7 @@
 
             dataDictionary = {};
 
-            var getDataUrl = "@Url.Action("ItemPopularity")";
+            var getDataUrl = "@Url.Action("ItemPopularity", new { Branch_Id = ViewBag.Branch_Id })";
 
             $.getJSON(getDataUrl, function (data) {
                 itemPopularity(data);

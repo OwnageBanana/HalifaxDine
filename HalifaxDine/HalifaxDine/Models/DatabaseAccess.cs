@@ -274,7 +274,7 @@ namespace HalifaxDine.Models
 
         public IEnumerable<PopularityModel> GetBranchItemPopularity()
         {
-            string sql = @"select MI.MENU_DESC, B.Branch_Id, B.BRANCH_PROVINCE, count(TI.MENU_ID) as Item_Count
+            string sql = @"select MI.MENU_Name as Menu_Desc, B.Branch_Id, B.BRANCH_PROVINCE, count(TI.MENU_ID) as Item_Count
                              from transaction_item TI
 		                        inner join menu_item MI on MI.Menu_Id = TI.Menu_Id
 		                        join transaction T on T.Trans_Id = TI.Trans_Id

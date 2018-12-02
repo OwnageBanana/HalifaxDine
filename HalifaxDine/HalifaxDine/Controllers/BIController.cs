@@ -1,4 +1,5 @@
 ﻿using HalifaxDine.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,15 +20,35 @@ namespace HalifaxDine.Controllers
             dao = new DatabaseAccess();
         }
         // GET: BI
+        [Authorize(Roles = "HeadManager,admin")]
         public ActionResult Popularity()
         {
             return View();
         }
 
-        public ActionResult MonthlyPopularityData()
+        [Authorize(Roles = "BranchManager,admin")]
+        public ActionResult BranchPopularity()
+        {
+            int branch_id = -1;
+            EmployeeModel employee = dao.GetEmployeeRow(User.Identity.GetUserId());
+            branch_id = employee.Branch_Id;
+            //get the cookie for the branch selected
+            if (Request.Cookies["UserSettings"] != null && employee.Privilege_Id == (int)Role.Admin)
+            {
+                string cookieId = Request.Cookies["UserSettings"]["BranchId"];
+                int.TryParse(cookieId, out branch_id);
+            }
+            ViewBag.Branch_Id = branch_id;
+            return View();
+        }
+
+        public ActionResult MonthlyPopularityData(int? Branch_Id = null)
         {
 
             IEnumerable<PopularityModel> model = dao.GetBranchMonthlyPopularity();
+
+            if (Branch_Id != null)
+                model = model.Where(x => x.Branch_id == Branch_Id);
 
             //this makes a dictionary where month int is the key and the val is the list of objects which share that month val.
             var monthDict = model.GroupBy(x => x.Month, x => x, (key, g) => new { Month = key, vals = g.ToList() }).OrderBy(x => x.Month);
@@ -47,10 +68,13 @@ namespace HalifaxDine.Controllers
             return Json(result.ToArray<PopularityViewModel>(), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult OverallPopularityData()
+        public ActionResult OverallPopularityData(int? Branch_Id = null)
         {
 
             IEnumerable<PopularityModel> model = dao.GetBranchPopularity().OrderBy(x => x.Branch_Province);
+
+            if (Branch_Id != null)
+                model = model.Where(x => x.Branch_id == Branch_Id);
 
             PopularityViewModel result = new PopularityViewModel();
 
@@ -62,10 +86,13 @@ namespace HalifaxDine.Controllers
         }
 
 
-        public ActionResult ItemPopularity()
+        public ActionResult ItemPopularity(int? Branch_Id = null)
         {
 
             IEnumerable<PopularityModel> model = dao.GetBranchItemPopularity();
+
+            if (Branch_Id != null)
+                model = model.Where(x => x.Branch_id == Branch_Id);
 
             PopularityViewModel result = new PopularityViewModel();
 
