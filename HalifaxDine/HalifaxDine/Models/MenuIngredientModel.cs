@@ -15,6 +15,6 @@ namespace HalifaxDine.Models
         [DisplayName("Quantity")]
         public float Quantity { get; set; }
         [DisplayName("Unit")]
-        public char Unit { get; set; }
+        public string Unit { get; set; }
     }
 }

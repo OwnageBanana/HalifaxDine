@@ -44,8 +44,11 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.AuthorizedActionLink("Contact", "Contact", "Home")</li>
+                    @if (!User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.AuthorizedActionLink("Contact", "Contact", "Home")</li>
+                    }
                     <li>@Html.AuthorizedActionLink("Order", "Order", "Order")</li>
                     <li>@Html.AuthorizedActionLink("Register", "AdminRegister", "Account")</li>
                     <li>@Html.AuthorizedActionLink("Branch", "HeadManagerFunction", "Home")</li>

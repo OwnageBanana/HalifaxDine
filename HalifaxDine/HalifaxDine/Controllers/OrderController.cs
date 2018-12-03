@@ -19,14 +19,14 @@ namespace HalifaxDine.Controllers
         }
 
 
-        [Authorize(Roles = "Attender")]
+        [Authorize(Roles = "Attender,Chef")]
         public ActionResult Index()
         {
             return View();
         }
 
         // GET: Order/Create
-        [Authorize(Roles = "Client, Attender")]
+        [Authorize(Roles = "Client, Attender,Chef")]
         public ActionResult Order(MenuItemModel item, int? Client_Id = null)
         {
             string account_id = User.Identity.GetUserId();
@@ -102,14 +102,14 @@ namespace HalifaxDine.Controllers
         }
 
 
-        [Authorize(Roles = "Client,Attender")]
+        [Authorize(Roles = "Client,Attender,Chef")]
         public ActionResult Menu()
         {
             return PartialView("_MenuPartial",dao.GetMenuData());
         }
 
 
-        [Authorize(Roles = "Client,Attender")]
+        [Authorize(Roles = "Client,Attender,Chef")]
         public ActionResult PayOrder(int Trans_Id)
         {
 
@@ -117,7 +117,7 @@ namespace HalifaxDine.Controllers
             return RedirectToAction("index", "Home");
         }
 
-        [Authorize(Roles = "Client,Attender")]
+        [Authorize(Roles = "Client,Attender,Chef")]
         public ActionResult Delete(int Trans_Id, int Menu_Id)
         {
 
