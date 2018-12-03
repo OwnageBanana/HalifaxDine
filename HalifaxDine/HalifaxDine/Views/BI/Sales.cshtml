@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+@section Head{
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+}
+<h2>BI Reports</h2>
+<div class="row">
+    <div class="col-lg-8">
+        <h4>Month Over Month Branch Sales</h4>
+        <div id="chart">
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <h4>Overall Yearly Branch Sales</h4>
+        <div id="chart2">
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <h4>Item Popularity</h4>
+        <div id="chart3">
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+
+        function MonthylSales(monthly) {
+
+            var layout = {
+                barmode: 'group',
+            };
+
+            Plotly.newPlot('chart', monthly, layout);
+        }
+        function getMonthlyData() {
+
+            dataDictionary = {};
+
+            var getDataUrl = "@Url.Action("MonthlySalesData")";
+
+            $.getJSON(getDataUrl, function (data) {
+                MonthylSales    (data);
+            });
+        }
+
+        function overallSales(overall) {
+
+
+            Plotly.newPlot('chart2', overall);
+
+        }
+
+        function getOverallData() {
+
+            dataDictionary = {};
+
+            var getDataUrl = "@Url.Action("OverallSalesData")";
+
+            $.getJSON(getDataUrl, function (data) {
+                overallSales(data);
+
+            });
+        }
+
+        function ItemRevenue(items) {
+
+            Plotly.newPlot('chart3', items);
+        }
+
+        function getItemRevenue() {
+
+            dataDictionary = {};
+
+            var getDataUrl = "@Url.Action("ItemRevenue")";
+
+            $.getJSON(getDataUrl, function (data) {
+                ItemRevenue(data);
+
+            });
+        }
+
+        $(document).ready(function () {
+            getMonthlyData();
+            getOverallData();
+            getItemRevenue();
+        });
+
+    </script>
+}

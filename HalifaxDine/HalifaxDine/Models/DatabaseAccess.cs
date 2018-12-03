@@ -312,6 +312,80 @@ namespace HalifaxDine.Models
 
             return model;
         }
+
+
+        public IEnumerable<SalesModel> GetSalesTotal()
+        {
+            string sql = @"select round(sum(menu_item.menu_price), 2) as Sales, transaction.branch_id, branch_Province
+                            from transaction
+                            inner join transaction_item on transaction.trans_id=transaction_item.trans_id
+                            inner join menu_item on transaction_item.menu_id=menu_item.menu_id
+                            join branch on BRANCH.BRANCH_ID = transaction.BRANCH_ID
+                            where trans_status = 'PAID'
+                            group by(transaction.branch_id),branch_Province
+                        ";
+
+            IEnumerable<SalesModel> model = Enumerable.Empty<SalesModel>();
+            try
+            {
+                model = conn.Query<SalesModel>(sql);
+            }
+            catch (Exception e)
+            {
+                ;
+            }
+
+            return model;
+        }
+
+        public IEnumerable<SalesModel> GetMonthlySalesTotal()
+        {
+            string sql = @"select round(sum(menu_item.menu_price), 2) as Sales, transaction.branch_id, extract(MONTH from trans_datetime) as Month, branch_Province
+                            from transaction
+                            inner join transaction_item on transaction.trans_id=transaction_item.trans_id
+                            inner join menu_item on transaction_item.menu_id=menu_item.menu_id
+                            join branch on BRANCH.BRANCH_ID = transaction.BRANCH_ID
+                            where (trans_status = 'PAID')
+                            group by(transaction.branch_id), extract(MONTH from trans_datetime),branch_Province
+                        ";
+
+            IEnumerable<SalesModel> model = Enumerable.Empty<SalesModel>();
+            try
+            {
+                model = conn.Query<SalesModel>(sql);
+            }
+            catch (Exception e)
+            {
+                ;
+            }
+
+            return model;
+        }
+
+        public IEnumerable<SalesModel> GetitemRevenueData()
+        {
+            string sql = @"select round(sum(menu_item.menu_price), 2) as Sales, transaction.branch_id, MENU_NAME
+                            from transaction
+                            inner join transaction_item on transaction.trans_id=transaction_item.trans_id
+                            inner join menu_item on transaction_item.menu_id=menu_item.menu_id
+                            join branch on BRANCH.BRANCH_ID = transaction.BRANCH_ID
+                            and (trans_status = 'PAID')
+                            group by(transaction.branch_id), extract(MONTH from trans_datetime), MENU_NAME
+                        ";
+
+            IEnumerable<SalesModel> model = Enumerable.Empty<SalesModel>();
+            try
+            {
+                model = conn.Query<SalesModel>(sql);
+            }
+            catch (Exception e)
+            {
+                ;
+            }
+
+            return model;
+        }
+
         // UPDATE BRANCH INFO
         public bool UpdateBranch(BranchModel model)
         {

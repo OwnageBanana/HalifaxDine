@@ -1,5 +1,7 @@
 ﻿
 @using AuthorizedActionLink;
+@using Microsoft.AspNet.Identity;
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +13,19 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("head", required: false)
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-submenu a.sublist').on("click", function (e) {
+                $(this).next('ul').toggle();
+                e.stopPropagation();
+                e.preventDefault();
+            });
+        });
+        function togDrop() {
+
+            $(".dropdown-menu").toggle();
+        }
+    </script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 </head>
 <body>
@@ -43,13 +58,25 @@
                     <li>@Html.AuthorizedActionLink("Send Feedback", "SubmitFeedback", "Feedback")</li>
                     <li>@Html.AuthorizedActionLink("Ingredient", "ChefFunction", "Home")</li>
                     <li>@Html.AuthorizedActionLink("Ingredient in Menu", "ChefFunction_Menu", "Home")</li>
-                    <li>@Html.AuthorizedActionLink("Reports", "Popularity", "BI")</li>
-                    <li>@Html.AuthorizedActionLink("Reports", "BranchPopularity", "BI")</li>
+
+                    @if (User.IsInRole("Admin") || User.IsInRole("HeadManager") || User.IsInRole("BranchManager"))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-target="reports" onclick="togDrop()" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports<span class="caret"></span></a>
+                            <ul class="dropdown-menu" id="reports">
+
+                                <li>@Html.AuthorizedActionLink("Popularity", "Popularity", "BI")</li>
+                                <li>@Html.AuthorizedActionLink("Branch Popularity", "BranchPopularity", "BI")</li>
+                                <li class="dropdown-divider"></li>
+                                <li>@Html.AuthorizedActionLink("Sales", "Sales", "BI")</li>
+                                <li>@Html.AuthorizedActionLink("Branch Sales", "BranchSales", "BI")</li>
+                            </ul>
+                        </li>
+                    }
 
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
-
         </div>
     </div>
     <div class="container body-content">
@@ -62,6 +89,8 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+
+
     @RenderSection("scripts", required: false)
 </body>
 </html>
